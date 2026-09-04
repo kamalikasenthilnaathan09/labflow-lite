@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scanner — LabFlow Lite</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Dedicated Faculty CSS -->
+    <link rel="stylesheet" href="/css/faculty.css">
+</head>
+<body class="faculty-body">
+    <!-- Mobile Sidebar Drawer Backdrop Overlay -->
+    <div class="sidebar-overlay d-none" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- 1. LEFT PERSISTENT SIDEBAR NAVIGATION -->
+    <aside class="faculty-sidebar" id="faculty-sidebar">
+                <!-- Sidebar Brand Header -->
+        <div class="sidebar-brand-header">
+            <a href="/dashboard/faculty" class="brand-link d-flex align-items-center gap-2.5 text-decoration-none">
+                <img src="/assets/images/logo.png" alt="LabFlow Lite Logo" class="sidebar-logo-img">
+                <div>
+                    <div class="brand-title brand-text text-white fw-bold tracking-tight">LabFlow <span class="text-purple-highlight">Lite</span></div>
+                    <div class="brand-badge-tag extra-small font-monospace" style="font-size:0.65rem; letter-spacing:0.06em;">FACULTY PORTAL</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Sidebar Navigation Sections -->
+        <div class="sidebar-scrollable-content">
+            <nav class="sidebar-nav">
+                <!-- Section 1: Main -->
+                <div class="nav-section-title">WORKSPACE</div>
+                <a href="/dashboard/faculty" class="nav-item-link">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/dashboard/faculty/sessions" class="nav-item-link">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Today's Sessions</span>
+                </a>
+
+                <!-- Section 2: Laboratory & Assets -->
+                <div class="nav-section-title">LABORATORIES</div>
+                <a href="/dashboard/faculty/labs" class="nav-item-link">
+                    <i class="bi bi-building"></i>
+                    <span>Our Labs</span>
+                </a>
+                <a href="/dashboard/faculty/equipment" class="nav-item-link">
+                    <i class="bi bi-hdd-rack"></i>
+                    <span>Equipment</span>
+                </a>
+                <a href="/dashboard/faculty/qr-scanner" class="nav-item-link active">
+                    <i class="bi bi-qr-code-scan"></i>
+                    <span>QR Scanner</span>
+                </a>
+                <a href="/dashboard/faculty/booking" class="nav-item-link">
+                    <i class="bi bi-calendar2-plus"></i>
+                    <span>Smart Booking</span>
+                </a>
+                <a href="/dashboard/faculty/schedule" class="nav-item-link">
+                    <i class="bi bi-calendar3"></i>
+                    <span>Lab Schedule</span>
+                </a>
+
+                <!-- Section 3: Operations & Intelligence -->
+                <div class="nav-section-title">OPERATIONS</div>
+                <a href="/dashboard/faculty/usage-history" class="nav-item-link">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Usage History</span>
+                </a>
+                <a href="/dashboard/faculty/fault-reports" class="nav-item-link">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span>Fault Reports</span>
+                </a>
+                <a href="/dashboard/faculty/disruption-prediction" class="nav-item-link">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Disruption Prediction</span>
+                </a>
+
+                <!-- Section 4: Account -->
+                <div class="nav-section-title">ACCOUNT</div>
+                <a href="/dashboard/faculty/profile" class="nav-item-link">
+                    <i class="bi bi-person-gear"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer / Logout -->
+        <div class="sidebar-footer">
+            <button type="button" class="btn-sidebar-logout" onclick="openLogoutModal()">
+                <i class="bi bi-box-arrow-right"></i> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN QR SCANNER WORKSPACE -->
+    <main class="faculty-main-content">
+        <!-- Top Navigation Bar Header -->
+        <header class="top-nav-bar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-sidebar-toggle d-lg-none" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle Navigation">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                <div>
+                    <span class="badge badge-portal-header extra-small px-3 py-1 mb-1">
+                        FACULTY WORKSPACE
+                    </span>
+                    <h4 class="text-white fw-bold mb-0 faculty-greeting-text">Faculty Portal</h4>
+                </div>
+            </div>
+
+            <!-- Faculty Profile & Info on Right -->
+            <div class="d-flex align-items-center gap-3">
+                                <!-- NOTIFICATION BELL DROPDOWN WRAPPER -->
+                <div class="position-relative" id="faculty-notification-bell-wrapper">
+                    <button type="button" class="btn-nav-icon position-relative" id="btn-faculty-notification-bell" onclick="toggleFacultyNotificationDropdown(event)" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill d-none" id="faculty-notification-unread-badge" style="background-color: #8B6FB3; color: #FFFFFF; font-size: 10px; padding: 3px 6px; border: 2px solid #111014;">
+                            0
+                        </span>
+                    </button>
+
+                    <!-- DROPDOWN PANEL OVERLAY -->
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow-lg d-none" id="faculty-notification-dropdown-panel" style="width: 360px; max-width: 90vw; background-color: #211E27; border: 1px solid #38323F; border-radius: 12px; position: absolute; right: 0; top: 48px; z-index: 99999; font-family: var(--font-main);">
+                        <div class="d-flex align-items-center justify-content-between p-3" style="border-bottom: 1px solid #38323F; background-color: #19171F; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-bell-fill" style="color: #8B6FB3;"></i>
+                                <span class="fw-bold text-white fs-6">Notifications</span>
+                                <span class="badge px-2 py-0.5 rounded-pill font-monospace extra-small" id="faculty-dropdown-unread-count" style="background-color: rgba(139, 111, 179, 0.2); color: #B99AD9;">0 unread</span>
+                            </div>
+                            <button type="button" class="btn btn-link text-decoration-none p-0 extra-small fw-semibold" onclick="markAllFacultyNotificationsAsRead()" style="color: #B99AD9;">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div id="faculty-notification-dropdown-list" style="max-height: 340px; overflow-y: auto;">
+                            <!-- Dynamically populated notifications -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-2.5 ps-2 border-start border-slate-800">
+                    <div class="faculty-avatar-circle" id="faculty-avatar-initials">
+                        DM
+                    </div>
+                    <div class="d-none d-sm-block">
+                        <div class="text-white fw-bold small text-truncate" style="max-width: 180px;" id="faculty-nav-name">Dr. Murugesan</div>
+                        <div class="d-flex align-items-center gap-1.5 extra-small">
+                            <span class="badge badge-faculty-role">FACULTY</span>
+                            <span class="text-slate-400 font-monospace text-truncate" style="max-width: 140px;" id="faculty-nav-dept">AI &amp; DS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Body Container -->
+        <div class="workspace-body-container">
+            
+            <!-- Page Header Card -->
+            <div class="page-title-header-card mb-4">
+                <div class="header-flex-wrapper">
+                    <div class="header-text-content">
+                        <div class="header-tag-pill mb-1">FACULTY EQUIPMENT IDENTIFICATION</div>
+                        <h2 class="page-main-title text-white fw-bold mb-1">QR Scanner</h2>
+                        <p class="text-secondary-label mb-0">Identify laboratory equipment instantly and view its current availability, condition, and usage details.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two-Column Responsive Workspace Grid -->
+            <div class="row g-4">
+                <!-- LEFT COLUMN: SCANNER & MANUAL LOOKUP -->
+                <div class="col-12 col-lg-6">
+                    <div class="faculty-card p-3 p-lg-4 mb-4" id="scanner-main-card">
+                        <!-- Card Header -->
+                        <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-qr-code-scan text-purple-highlight fs-5"></i>
+                                <h5 class="text-white fw-bold mb-0 fs-6 text-uppercase tracking-wider">SCAN EQUIPMENT QR</h5>
+                            </div>
+                            <span class="badge rounded-pill extra-small font-monospace px-2.5 py-1" id="camera-status-indicator" style="background-color: rgba(129, 121, 134, 0.15); color: #B2AAB8; border: 1px solid rgba(129, 121, 134, 0.3);">
+                                CAMERA NOT STARTED
+                            </span>
+                        </div>
+
+                        <!-- Viewfinder Frame Area -->
+                        <div class="qr-viewfinder-box mb-3" id="qr-viewfinder">
+                            <div class="qr-corner corner-tl"></div>
+                            <div class="qr-corner corner-tr"></div>
+                            <div class="qr-corner corner-bl"></div>
+                            <div class="qr-corner corner-br"></div>
+
+                            <!-- Subtle Scanning Laser Line -->
+                            <div class="qr-laser-line d-none" id="qr-laser-line"></div>
+
+                            <video id="qr-video" class="qr-video-feed d-none" playsinline autoplay muted></video>
+                            <canvas id="qr-canvas" class="d-none"></canvas>
+
+                            <!-- Standby Viewfinder Content -->
+                            <div class="viewfinder-placeholder d-flex flex-column align-items-center justify-content-center h-100 p-3 text-center" id="viewfinder-placeholder">
+                                <div class="scanner-icon-circle mb-2.5">
+                                    <i class="bi bi-camera-video fs-3 text-purple-highlight"></i>
+                                </div>
+                                <div class="text-white fw-semibold small mb-1" id="viewfinder-title">Start your camera to scan an equipment QR code.</div>
+                                <div class="text-slate-400 extra-small" id="viewfinder-subtitle">Rear camera is preferred on mobile devices.</div>
+                            </div>
+
+                            <!-- Instant QR Detected Overlay -->
+                            <div class="viewfinder-detected-overlay d-flex flex-column align-items-center justify-content-center h-100 w-100 p-3 text-center position-absolute top-0 start-0 d-none" id="viewfinder-detected-overlay" style="background-color: rgba(24, 22, 29, 0.94); z-index: 10;">
+                                <div class="spinner-border text-purple-highlight mb-3" role="status" style="width: 2.25rem; height: 2.25rem;"></div>
+                                <div class="badge rounded-pill extra-small font-monospace px-3 py-1 mb-2" style="background-color: rgba(139, 111, 179, 0.2); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.4);">
+                                    ● QR CODE DETECTED
+                                </div>
+                                <div class="text-white fw-bold fs-6 mb-1 font-monospace" id="detected-overlay-qr-id">QR_AI001</div>
+                                <div class="text-slate-300 extra-small">Identifying equipment...</div>
+                            </div>
+                        </div>
+
+                        <!-- Camera Action Controls -->
+                        <div class="camera-controls-container text-center mb-3">
+                            <button type="button" class="btn btn-purple rounded-pill px-4 py-2.5 small fw-semibold" id="btn-start-scan" onclick="startCameraScan()">
+                                <i class="bi bi-camera me-1.5"></i> Start Camera
+                            </button>
+                            <button type="button" class="btn btn-stop-camera btn-outline-danger rounded-pill px-4 py-2.5 small fw-semibold d-none" id="btn-stop-scan" onclick="stopCameraScan()">
+                                <i class="bi bi-stop-circle me-1.5"></i> Stop Camera
+                            </button>
+                        </div>
+
+                        <!-- Camera Error / Alert Notice -->
+                        <div id="camera-alert-box" class="alert extra-small mb-3 d-none text-start" style="background-color: rgba(184, 117, 123, 0.12); border: 1px solid rgba(184, 117, 123, 0.3); color: #F3F0F5;">
+                            <div class="d-flex flex-column gap-2">
+                                <div class="d-flex align-items-start gap-2">
+                                    <i class="bi bi-camera-video-off text-rose fs-5 mt-0.5"></i>
+                                    <div>
+                                        <div class="text-white fw-semibold mb-0.5">Camera access was denied.</div>
+                                        <div class="text-slate-300">Allow camera permission in your browser settings or use manual QR ID lookup.</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2 pt-1 border-top border-secondary-subtle">
+                                    <button type="button" class="btn btn-sm btn-purple rounded-pill px-3 py-1 extra-small fw-semibold" onclick="startCameraScan()">
+                                        <i class="bi bi-arrow-clockwise me-1"></i> Try Again
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-3 py-1 extra-small" onclick="focusManualLookup()">
+                                        <i class="bi bi-keyboard me-1"></i> Enter QR ID Manually
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section Divider -->
+                        <div class="d-flex align-items-center gap-3 my-3">
+                            <div class="flex-grow-1 border-bottom border-secondary-subtle"></div>
+                            <span class="footer-meta-label extra-small text-slate-400">ENTER QR ID MANUALLY</span>
+                            <div class="flex-grow-1 border-bottom border-secondary-subtle"></div>
+                        </div>
+
+                        <!-- Manual QR Lookup Form -->
+                        <form id="manual-qr-form" onsubmit="handleManualLookup(event)">
+                            <div class="mb-3 text-start">
+                                <label class="footer-meta-label d-block mb-1.5" for="manual-qr-input">QR IDENTIFIER</label>
+                                <div class="search-input-wrapper position-relative">
+                                    <i class="bi bi-qr-code search-input-icon"></i>
+                                    <input type="text" class="form-control faculty-search-input" id="manual-qr-input" placeholder="e.g. QR_AI001" required autocomplete="off">
+                                </div>
+                                <div class="d-flex flex-wrap align-items-center gap-2 mt-2 extra-small text-slate-400">
+                                    <span>Sample QR codes:</span>
+                                    <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-2.5 py-0.5 extra-small font-monospace" onclick="setQuickQr('QR_AI001')">QR_AI001</button>
+                                    <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-2.5 py-0.5 extra-small font-monospace" onclick="setQuickQr('QR_DBMS002')">QR_DBMS002</button>
+                                    <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-2.5 py-0.5 extra-small font-monospace" onclick="setQuickQr('QR_MP001')">QR_MP001</button>
+                                </div>
+                            </div>
+
+                            <div class="pt-1">
+                                <button type="submit" class="btn btn-outline-custom rounded-pill px-4 py-2.5 small fw-semibold w-100" id="btn-submit-manual">
+                                    <i class="bi bi-search me-1.5"></i> Find Equipment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: RESULTS & RECENT SCANS -->
+                <div class="col-12 col-lg-6">
+                    <!-- Prominent Visible Success Notification Banner -->
+                    <div id="scan-success-banner" class="alert d-flex align-items-center justify-content-between p-3 rounded-3 mb-3 border shadow-sm d-none" style="background-color: rgba(121, 168, 138, 0.16); border-color: rgba(121, 168, 138, 0.45) !important; color: #F3F0F5;">
+                        <div class="d-flex align-items-center gap-2.5">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px; background-color: rgba(121, 168, 138, 0.25); color: #79A88A;">
+                                <i class="bi bi-check2-circle fs-4"></i>
+                            </div>
+                            <div>
+                                <div class="text-white fw-bold small text-uppercase tracking-wider">✓ EQUIPMENT IDENTIFIED</div>
+                                <div class="text-white small fw-semibold" id="success-banner-eq-name">NVIDIA RTX 4090 GPU Workstation PC-1</div>
+                                <div class="extra-small font-monospace text-slate-300" id="success-banner-eq-meta">LAB-AI-001 • QR_AI001</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white extra-small" onclick="hideSuccessBanner()" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Equipment Identifying Loading Card -->
+                    <div class="faculty-card p-4 text-center mb-4 d-none" id="equipment-loading-card">
+                        <div class="spinner-border text-purple-highlight mb-3" role="status" style="width: 2.75rem; height: 2.75rem;"></div>
+                        <h5 class="text-white fw-bold mb-1 fs-6 text-uppercase tracking-wider">IDENTIFYING EQUIPMENT</h5>
+                        <p class="text-slate-300 small mb-2">Checking the LabFlow Lite equipment registry...</p>
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill font-monospace extra-small" style="background-color: rgba(139, 111, 179, 0.15); border: 1px solid rgba(139, 111, 179, 0.3); color: #B99AD9;">
+                            <i class="bi bi-qr-code"></i>
+                            <span id="loading-card-qr-id">QR_AI001</span>
+                        </div>
+                    </div>
+
+                    <!-- Standby Placeholder Card (Before scan) -->
+                    <div class="faculty-card p-4 text-center mb-4" id="equipment-standby-card">
+                        <div class="scanner-icon-circle mx-auto mb-3" style="width: 58px; height: 58px;">
+                            <i class="bi bi-qr-code fs-3 text-slate-400"></i>
+                        </div>
+                        <h5 class="text-white fw-bold mb-1 fs-6">SCAN EQUIPMENT QR</h5>
+                        <p class="text-slate-400 small mb-0" style="max-width: 320px; margin: 0 auto;">
+                            Scan an equipment QR code or enter a QR ID to view its real-time availability, laboratory, and specifications.
+                        </p>
+                    </div>
+
+                    <!-- Equipment Identified Result Card -->
+                    <div class="faculty-card p-3 p-lg-4 mb-4 d-none" id="equipment-result-card">
+                        <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge extra-small fw-bold px-2.5 py-1" style="background-color: rgba(121, 168, 138, 0.15); color: #79A88A; border: 1px solid rgba(121, 168, 138, 0.3);">
+                                    <i class="bi bi-check-circle-fill me-1"></i> EQUIPMENT IDENTIFIED
+                                </span>
+                                <span class="badge extra-small font-monospace px-2.5 py-1" id="result-lab-code" style="background-color: rgba(139, 111, 179, 0.14); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.25);">DL-LAB-01</span>
+                            </div>
+                            <div>
+                                <span class="status-pill status-available" id="result-status-pill">● Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Equipment Name & Code -->
+                        <div class="mb-3">
+                            <h4 class="text-white fw-bold mb-1 fs-5" id="result-eq-name">NVIDIA RTX 4090 GPU Workstation PC-1</h4>
+                            <div class="text-purple-highlight font-monospace extra-small" id="result-eq-code">LAB-AI-001</div>
+                        </div>
+
+                        <!-- Structured Metadata Grid -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <div class="footer-meta-block">
+                                    <span class="footer-meta-label">CATEGORY</span>
+                                    <div class="text-slate-100 fw-semibold small" id="result-category">Computing</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="footer-meta-block">
+                                    <span class="footer-meta-label">QR ID</span>
+                                    <div class="text-purple-highlight font-monospace fw-bold small" id="result-qr-code">QR_AI001</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="footer-meta-block">
+                                    <span class="footer-meta-label">LABORATORY</span>
+                                    <div class="text-slate-100 fw-semibold small" id="result-lab-name">Advanced Computing &amp; AI Research Lab</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="footer-meta-block">
+                                    <span class="footer-meta-label">LOCATION</span>
+                                    <div class="text-slate-300 small font-monospace" id="result-lab-loc">Block A, 3rd Floor, Room 310</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fault Warning (If Faulty) -->
+                        <div id="result-fault-block" class="p-3 rounded mb-3 border border-rose-subtle bg-rose-subtle d-none">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <span class="text-rose fw-bold small"><i class="bi bi-exclamation-triangle-fill me-1"></i> Open Fault Report</span>
+                                <span class="badge badge-rose extra-small" id="result-fault-priority">Medium Priority</span>
+                            </div>
+                            <p class="text-slate-300 extra-small mb-0" id="result-fault-desc">Reported hardware issue</p>
+                        </div>
+
+                        <!-- Action Controls -->
+                        <div class="d-flex flex-wrap align-items-center gap-2 pt-3 border-top border-secondary-subtle">
+                            <a href="/dashboard/faculty/equipment" class="btn btn-purple rounded-pill px-3.5 py-2 extra-small fw-semibold text-center flex-grow-1">
+                                <i class="bi bi-hdd-rack me-1"></i> View Equipment
+                            </a>
+                            <button type="button" class="btn btn-outline-custom rounded-pill px-3 py-2 extra-small fw-semibold" id="btn-result-action" onclick="handleFaultAction()">
+                                <i class="bi bi-tools me-1"></i> Report Fault
+                            </button>
+                            <button type="button" class="btn btn-outline-custom rounded-pill px-3 py-2 extra-small fw-semibold" onclick="scanAgain()">
+                                <i class="bi bi-qr-code-scan me-1"></i> Scan Again
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Equipment Not Found Error Card -->
+                    <div class="faculty-card p-4 text-center mb-4 d-none" id="equipment-error-card">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle p-3 mb-3" style="width: 54px; height: 54px; background-color: rgba(184, 117, 123, 0.15); border: 1px solid rgba(184, 117, 123, 0.3);">
+                            <i class="bi bi-exclamation-triangle fs-4 text-rose"></i>
+                        </div>
+                        <h5 class="text-white fw-bold mb-1 fs-6 text-uppercase tracking-wider">⚠ QR CODE NOT RECOGNIZED</h5>
+                        <p class="text-slate-300 small mb-3" id="error-card-message">Scanned QR ID does not match any registered laboratory equipment.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-sm btn-purple rounded-pill px-3.5 py-2 small fw-semibold" onclick="scanAgain()">
+                                <i class="bi bi-arrow-clockwise me-1"></i> Scan Again
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-3.5 py-2 small fw-semibold" onclick="focusManualLookup()">
+                                <i class="bi bi-keyboard me-1"></i> Enter QR ID Manually
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Scans Card -->
+                    <div class="faculty-card p-3 p-lg-4">
+                        <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                            <div>
+                                <h5 class="text-white fw-bold mb-0 fs-6 text-uppercase tracking-wider">RECENT SCANS</h5>
+                                <p class="text-secondary-label extra-small mb-0">Hardware scanned during your current browser session</p>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-2.5 py-1 extra-small" onclick="clearRecentScans()">
+                                <i class="bi bi-trash3 me-1"></i> Clear
+                            </button>
+                        </div>
+
+                        <div id="recent-scans-list">
+                            <!-- Dynamically loaded -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGOUT CONFIRMATION MODAL -->
+    <div class="modal fade" id="facultyLogoutModal" tabindex="-1" aria-labelledby="facultyLogoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content modal-content-dark p-2">
+                <div class="modal-header modal-header-dark border-0 pb-1">
+                    <h6 class="modal-title text-white fw-bold d-flex align-items-center gap-2" id="facultyLogoutModalLabel">
+                        <i class="bi bi-box-arrow-right text-rose"></i> Confirm Sign Out
+                    </h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div id="faculty-logout-alert" class="alert alert-danger extra-small mb-2 d-none"></div>
+                    <p class="text-slate-300 extra-small mb-0">Are you sure you want to sign out of the Faculty Portal?</p>
+                </div>
+                <div class="modal-footer modal-footer-dark border-0 pt-2 gap-2">
+                    <button type="button" class="btn btn-sm btn-modal-cancel rounded-pill px-3 flex-grow-1" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-modal-confirm-logout rounded-pill px-3 flex-grow-1" id="btn-confirm-faculty-logout" onclick="executeFacultyLogout()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST POPUP NOTIFICATION -->
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1080; pointer-events: none; max-width: 380px; width: 100%;"></div>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jsQR Library for Real Client-side Camera QR Code Decoding -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <!-- Dedicated Faculty QR Scanner JS -->
+    <script src="/js/faculty_qr_scanner.js"></script>
+    <script src="/js/faculty_notifications.js"></script>
+</body>
+</html>

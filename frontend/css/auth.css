@@ -1,0 +1,551 @@
+/* ==========================================================================
+   LabFlow Lite - Dedicated Authentication UI Stylesheet
+   Premium Purple / Plum Theme:
+   Main Background (#111014), Sidebar (#18161D), Card (#211E27 / #292531),
+   Input (#19171F), Border (#38323F), Primary Purple (#8B6FB3 / #A184C7),
+   Light Purple (#B99AD9), Text (#F3F0F5 / #B2AAB8 / #817986)
+   ========================================================================== */
+
+:root {
+    --bg-primary: #111014;
+    --bg-sidebar: #18161D;
+    --bg-card: #211E27;
+    --bg-card-hover: #292531;
+    --border: #38323F;
+    --border-subtle: #2C2733;
+
+    /* Global Input Variables */
+    --input-bg: #19171F;
+    --input-border: #38323F;
+    --input-text: #F3F0F5;
+    --input-placeholder: #817986;
+    --input-focus-border: #8B6FB3;
+    --input-focus-shadow: 0 0 0 2px rgba(139, 111, 179, 0.12);
+    --input-disabled-bg: #211E27;
+    --input-disabled-text: #817986;
+
+    --bg-input: var(--input-bg);
+
+    --accent-primary: #8B6FB3;
+    --accent-hover: #A184C7;
+    --accent-light: #B99AD9;
+    --accent-primary-hover: #A184C7;
+    --accent-primary-subtle: rgba(139, 111, 179, 0.14);
+
+    --accent-secondary: #B99AD9;
+    --accent-secondary-subtle: rgba(185, 154, 217, 0.14);
+
+    --text-primary: #F3F0F5;
+    --text-secondary: #B2AAB8;
+    --text-muted: #817986;
+
+    --success: #79A88A;
+    --warning: #C39A5A;
+    --error: #B8757B;
+
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Bootstrap 5 Overrides */
+    --bs-body-bg: var(--bg-primary);
+    --bs-body-color: var(--text-primary);
+
+    /* Backward Compatible Legacy Aliases */
+    --bg-dark-main: var(--bg-primary);
+    --bg-dark-secondary: var(--bg-sidebar);
+    --bg-slate-950: var(--input-bg);
+    --bg-slate-900: var(--bg-card);
+    --border-slate-800: var(--border);
+    --border-slate-700: var(--border);
+
+    --text-slate-100: var(--text-primary);
+    --text-slate-200: var(--text-primary);
+    --text-slate-300: var(--text-secondary);
+    --text-slate-400: var(--text-muted);
+    
+    --cyan-primary: var(--accent-primary);
+    --cyan-hover: var(--accent-hover);
+    --cyan-light: var(--accent-light);
+    --cyan-subtle: var(--accent-primary-subtle);
+    --blue-primary: var(--accent-primary);
+    
+    --emerald-primary: var(--success);
+    --rose-primary: var(--error);
+}
+
+html {
+    color-scheme: dark;
+}
+
+body.auth-body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   GLOBAL FORM CONTROLS & INPUT SYSTEM
+   ========================================================================== */
+
+input,
+textarea,
+select,
+.form-control,
+.form-select,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="search"],
+input[type="tel"],
+input[type="url"] {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.65rem 0.9rem;
+    line-height: 1.5;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+/* Placeholder Styling */
+input::placeholder,
+textarea::placeholder,
+.form-control::placeholder {
+    color: var(--input-placeholder) !important;
+    opacity: 1;
+}
+
+/* Focus State */
+input:focus,
+textarea:focus,
+select:focus,
+.form-control:focus,
+.form-select:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="datetime-local"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border-color: var(--input-focus-border) !important;
+    box-shadow: var(--input-focus-shadow) !important;
+    outline: none !important;
+}
+
+/* Disabled & Readonly */
+input:disabled,
+textarea:disabled,
+select:disabled,
+.form-control:disabled,
+.form-select:disabled,
+input[readonly],
+textarea[readonly] {
+    background-color: var(--input-disabled-bg) !important;
+    color: var(--input-disabled-text) !important;
+    border-color: var(--input-border) !important;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+/* Date & Time Native Scheme */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+    color-scheme: dark !important;
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(0.8) brightness(1.2);
+    cursor: pointer;
+    opacity: 0.85;
+}
+
+/* Select & Option */
+select,
+.form-select {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 0.5rem !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23B2AAB8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 14px 10px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    padding-right: 2.25rem !important;
+}
+
+option,
+optgroup {
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    padding: 0.5rem;
+}
+
+option:checked,
+option:hover {
+    background-color: var(--bg-card-hover) !important;
+    color: var(--input-text) !important;
+}
+
+/* Input Groups */
+.auth-input-group, .input-group {
+    position: relative;
+}
+
+.auth-input-group .input-group-text,
+.input-group .input-group-text {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--input-placeholder) !important;
+    min-width: 44px;
+    justify-content: center;
+}
+
+.password-toggle-btn {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    border-left: none !important;
+    color: var(--text-muted);
+    padding: 0 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+    color: var(--text-primary);
+}
+
+/* Checkbox */
+.form-check-input {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    cursor: pointer;
+}
+.form-check-input:checked {
+    background-color: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
+}
+.form-check-input:focus {
+    border-color: var(--input-focus-border) !important;
+    box-shadow: var(--input-focus-shadow) !important;
+}
+
+/* Legacy Utility Classes */
+.bg-slate-950 { background-color: var(--input-bg) !important; }
+.bg-slate-900 { background-color: var(--bg-card) !important; }
+.border-slate-800,
+.border-slate-700 { border-color: var(--input-border) !important; }
+
+/* Split-Screen Main Wrapper */
+.auth-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+}
+
+/* LEFT SIDE: BRAND SHOWCASE */
+.auth-brand-side {
+    flex: 1;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    padding: 3rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-logo-badge {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+}
+
+.feature-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.showcase-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.65rem;
+    padding: 1.15rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.showcase-card:hover {
+    transform: translateY(-2px);
+    background-color: var(--bg-card-hover);
+    border-color: var(--accent-primary);
+}
+
+.showcase-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: var(--accent-primary-subtle);
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+/* RIGHT SIDE: AUTHENTICATION FORM CARD CONTAINER */
+.auth-form-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    background-color: var(--bg-primary);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 2.25rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* Role Selector Radio Pill Buttons */
+.role-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.role-radio-pill {
+    position: relative;
+}
+
+.role-radio-pill input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.role-pill-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 44px;
+    padding: 0 1rem;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.role-pill-label:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.role-radio-pill input[type="radio"]:checked + .role-pill-label {
+    background-color: var(--accent-primary-subtle);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+/* Prominent Full-Width Submit Buttons (Solid Purple #8B6FB3) */
+.btn-auth-submit,
+.btn-auth-primary {
+    background-color: var(--accent-primary) !important;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    height: 46px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    transition: all 0.2s ease;
+    box-shadow: none !important;
+}
+
+.btn-auth-submit:hover,
+.btn-auth-primary:hover {
+    background-color: var(--accent-hover) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: none !important;
+}
+
+.btn-auth-submit:disabled,
+.btn-auth-primary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Links & Text */
+.auth-link {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.text-cyan {
+    color: var(--accent-primary) !important;
+}
+
+.bg-cyan-subtle {
+    background-color: var(--accent-primary-subtle) !important;
+}
+
+.border-cyan-subtle {
+    border-color: rgba(139, 111, 179, 0.3) !important;
+}
+
+/* Alert Boxes */
+.alert-auth-success {
+    background-color: rgba(121, 168, 138, 0.14);
+    border: 1px solid rgba(121, 168, 138, 0.3);
+    color: var(--success);
+    border-radius: 0.5rem;
+}
+
+.alert-auth-danger {
+    background-color: rgba(184, 117, 123, 0.14);
+    border: 1px solid rgba(184, 117, 123, 0.3);
+    color: var(--error);
+    border-radius: 0.5rem;
+}
+
+/* Responsive Queries */
+@media (max-width: 991.98px) {
+    .auth-wrapper {
+        flex-direction: column;
+    }
+    
+    .auth-brand-side {
+        padding: 2rem 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .feature-showcase-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==========================================================================
+   Official LabFlow Lite Logo & Brand Rules + Subtle Animation
+   ========================================================================== */
+@keyframes logoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.auth-brand-logo-img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 9px;
+    flex-shrink: 0;
+    display: inline-block;
+    animation: logoEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.auth-brand-side:hover .auth-brand-logo-img {
+    transform: scale(1.04);
+}
+
+.login-card-logo-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 10px;
+    display: inline-block;
+    animation: logoEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.login-card-logo-img:hover {
+    transform: scale(1.04);
+}
+
+.brand-text {
+    font-family: var(--font-main, 'Inter', sans-serif);
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.text-purple-highlight {
+    color: #B99AD9 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-brand-logo-img,
+    .login-card-logo-img {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

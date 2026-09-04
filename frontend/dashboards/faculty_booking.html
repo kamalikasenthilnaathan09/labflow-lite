@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Booking — LabFlow Lite</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Dedicated Faculty CSS -->
+    <link rel="stylesheet" href="/css/faculty.css">
+</head>
+<body class="faculty-body">
+    <!-- Mobile Sidebar Drawer Backdrop Overlay -->
+    <div class="sidebar-overlay d-none" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- 1. LEFT PERSISTENT SIDEBAR NAVIGATION -->
+    <aside class="faculty-sidebar" id="faculty-sidebar">
+                <!-- Sidebar Brand Header -->
+        <div class="sidebar-brand-header">
+            <a href="/dashboard/faculty" class="brand-link d-flex align-items-center gap-2.5 text-decoration-none">
+                <img src="/assets/images/logo.png" alt="LabFlow Lite Logo" class="sidebar-logo-img">
+                <div>
+                    <div class="brand-title brand-text text-white fw-bold tracking-tight">LabFlow <span class="text-purple-highlight">Lite</span></div>
+                    <div class="brand-badge-tag extra-small font-monospace" style="font-size:0.65rem; letter-spacing:0.06em;">FACULTY PORTAL</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Sidebar Navigation Sections -->
+        <div class="sidebar-scrollable-content">
+            <nav class="sidebar-nav">
+                <!-- Section 1: Main -->
+                <div class="nav-section-title">WORKSPACE</div>
+                <a href="/dashboard/faculty" class="nav-item-link">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/dashboard/faculty/sessions" class="nav-item-link">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Today's Sessions</span>
+                </a>
+
+                <!-- Section 2: Laboratory & Assets -->
+                <div class="nav-section-title">LABORATORIES</div>
+                <a href="/dashboard/faculty/labs" class="nav-item-link">
+                    <i class="bi bi-building"></i>
+                    <span>Our Labs</span>
+                </a>
+                <a href="/dashboard/faculty/equipment" class="nav-item-link">
+                    <i class="bi bi-hdd-rack"></i>
+                    <span>Equipment</span>
+                </a>
+                <a href="/dashboard/faculty/qr-scanner" class="nav-item-link">
+                    <i class="bi bi-qr-code-scan"></i>
+                    <span>QR Scanner</span>
+                </a>
+                <a href="/dashboard/faculty/booking" class="nav-item-link active">
+                    <i class="bi bi-calendar2-plus"></i>
+                    <span>Smart Booking</span>
+                </a>
+                <a href="/dashboard/faculty/schedule" class="nav-item-link">
+                    <i class="bi bi-calendar3"></i>
+                    <span>Lab Schedule</span>
+                </a>
+
+                <!-- Section 3: Operations & Intelligence -->
+                <div class="nav-section-title">OPERATIONS</div>
+                <a href="/dashboard/faculty/usage-history" class="nav-item-link">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Usage History</span>
+                </a>
+                <a href="/dashboard/faculty/fault-reports" class="nav-item-link">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span>Fault Reports</span>
+                </a>
+                <a href="/dashboard/faculty/disruption-prediction" class="nav-item-link">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Disruption Prediction</span>
+                </a>
+
+                <!-- Section 4: Account -->
+                <div class="nav-section-title">ACCOUNT</div>
+                <a href="/dashboard/faculty/profile" class="nav-item-link">
+                    <i class="bi bi-person-gear"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer / Logout -->
+        <div class="sidebar-footer">
+            <button type="button" class="btn-sidebar-logout" onclick="openLogoutModal()">
+                <i class="bi bi-box-arrow-right"></i> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN SMART BOOKING WORKSPACE -->
+    <main class="faculty-main-content">
+        <!-- Top Navigation Bar Header -->
+        <header class="top-nav-bar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-sidebar-toggle d-lg-none" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle Navigation">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                <div>
+                    <span class="badge badge-portal-header extra-small px-3 py-1 mb-1">
+                        FACULTY WORKSPACE
+                    </span>
+                    <h4 class="text-white fw-bold mb-0 faculty-greeting-text">Faculty Portal</h4>
+                </div>
+            </div>
+
+            <!-- Faculty Profile & Info on Right -->
+            <div class="d-flex align-items-center gap-3">
+                                <!-- NOTIFICATION BELL DROPDOWN WRAPPER -->
+                <div class="position-relative" id="faculty-notification-bell-wrapper">
+                    <button type="button" class="btn-nav-icon position-relative" id="btn-faculty-notification-bell" onclick="toggleFacultyNotificationDropdown(event)" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill d-none" id="faculty-notification-unread-badge" style="background-color: #8B6FB3; color: #FFFFFF; font-size: 10px; padding: 3px 6px; border: 2px solid #111014;">
+                            0
+                        </span>
+                    </button>
+
+                    <!-- DROPDOWN PANEL OVERLAY -->
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow-lg d-none" id="faculty-notification-dropdown-panel" style="width: 360px; max-width: 90vw; background-color: #211E27; border: 1px solid #38323F; border-radius: 12px; position: absolute; right: 0; top: 48px; z-index: 99999; font-family: var(--font-main);">
+                        <div class="d-flex align-items-center justify-content-between p-3" style="border-bottom: 1px solid #38323F; background-color: #19171F; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-bell-fill" style="color: #8B6FB3;"></i>
+                                <span class="fw-bold text-white fs-6">Notifications</span>
+                                <span class="badge px-2 py-0.5 rounded-pill font-monospace extra-small" id="faculty-dropdown-unread-count" style="background-color: rgba(139, 111, 179, 0.2); color: #B99AD9;">0 unread</span>
+                            </div>
+                            <button type="button" class="btn btn-link text-decoration-none p-0 extra-small fw-semibold" onclick="markAllFacultyNotificationsAsRead()" style="color: #B99AD9;">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div id="faculty-notification-dropdown-list" style="max-height: 340px; overflow-y: auto;">
+                            <!-- Dynamically populated notifications -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-2.5 ps-2 border-start border-slate-800">
+                    <div class="faculty-avatar-circle" id="faculty-avatar-initials">
+                        DM
+                    </div>
+                    <div class="d-none d-sm-block">
+                        <div class="text-white fw-bold small text-truncate" style="max-width: 180px;" id="faculty-nav-name">Dr. Murugesan</div>
+                        <div class="d-flex align-items-center gap-1.5 extra-small">
+                            <span class="badge badge-faculty-role">FACULTY</span>
+                            <span class="text-slate-400 font-monospace text-truncate" style="max-width: 140px;" id="faculty-nav-dept">AI &amp; DS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Body Container -->
+        <div class="workspace-body-container">
+            
+            <!-- Page Header Card -->
+            <div class="page-title-header-card mb-4">
+                <div class="header-flex-wrapper">
+                    <div class="header-text-content">
+                        <div class="header-tag-pill mb-1">FACULTY WORKSPACE</div>
+                        <h2 class="page-main-title text-white fw-bold mb-1">Smart Booking</h2>
+                        <p class="text-secondary-label mb-1">Book a laboratory for your practical session and check availability before confirming.</p>
+                        <div class="d-flex align-items-center gap-2 extra-small text-slate-400">
+                            <span class="text-purple-highlight fw-semibold">Dr. Murugesan</span>
+                            <span>•</span>
+                            <span class="font-monospace">AI &amp; DS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Centered Booking Form Container -->
+            <div class="booking-container mx-auto" style="max-width: 900px;">
+                
+                <!-- 1. MAIN BOOK A LAB CARD -->
+                <div class="faculty-card p-3 p-lg-4 mb-4" id="booking-form-card">
+                    <!-- Card Header -->
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                        <div>
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-calendar2-plus text-purple-highlight fs-5"></i>
+                                <h5 class="text-white fw-bold mb-0 fs-6 text-uppercase tracking-wider">BOOK A LAB</h5>
+                            </div>
+                            <p class="text-slate-400 extra-small mb-0 mt-0.5">Choose the laboratory and session details you want to reserve.</p>
+                        </div>
+                        <span class="badge badge-purple-subtle extra-small fw-semibold px-2.5 py-1">
+                            New Reservation
+                        </span>
+                    </div>
+
+                    <form id="smart-booking-form" onsubmit="handleCheckAvailability(event)">
+                        <!-- Two-Column Desktop Layout -->
+                        <div class="row g-4 mb-4">
+                            
+                            <!-- LEFT COLUMN: Laboratory & Time Slot -->
+                            <div class="col-12 col-lg-6 border-end-lg border-secondary-subtle pe-lg-4">
+                                <h6 class="text-purple-highlight fw-bold extra-small tracking-wider text-uppercase mb-3">
+                                    <i class="bi bi-building me-1"></i> LABORATORY &amp; TIME SLOT
+                                </h6>
+
+                                <!-- Select Laboratory -->
+                                <div class="mb-3">
+                                    <label class="footer-meta-label d-block mb-1.5" for="booking-lab">SELECT LABORATORY <span class="text-rose">*</span></label>
+                                    <select class="form-select filter-select" id="booking-lab" required onchange="onLaboratoryChanged()">
+                                        <option value="2" selected>Advanced Computing &amp; AI Research Lab (DL-LAB-01)</option>
+                                        <option value="6">Database Management Systems Lab (DBMS-LAB-05)</option>
+                                        <option value="1">Microprocessor &amp; Embedded Systems Lab (MP-LAB-01)</option>
+                                        <option value="3">Business Analytics Lab (BA-LAB-02)</option>
+                                        <option value="4">Big Data Analytics Lab (BDA-LAB-03)</option>
+                                        <option value="5">Cloud Service Management Lab (CSM-LAB-04)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Practical / Subject -->
+                                <div class="mb-3">
+                                    <label class="footer-meta-label d-block mb-1.5" for="booking-subject">PRACTICAL / SUBJECT <span class="text-rose">*</span></label>
+                                    <select class="form-select filter-select" id="booking-subject" required onchange="onSubjectChanged()">
+                                        <option value="Deep Learning Practical" selected>Deep Learning Practical</option>
+                                        <option value="Database Management Practical">Database Management Practical</option>
+                                    </select>
+                                </div>
+
+                                <!-- Session Date -->
+                                <div class="mb-3">
+                                    <label class="footer-meta-label d-block mb-1.5" for="booking-date">SESSION DATE <span class="text-rose">*</span></label>
+                                    <input type="date" class="form-control faculty-search-input font-monospace" id="booking-date" required onchange="onFormInputChanged()">
+                                </div>
+
+                                <!-- Select Time Slot -->
+                                <div class="p-3 rounded" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                                    <div class="d-flex align-items-center justify-content-between mb-1.5">
+                                        <label class="footer-meta-label mb-0 text-white fw-bold">SELECT TIME SLOT <span class="text-rose">*</span></label>
+                                        <i class="bi bi-clock text-purple-highlight extra-small"></i>
+                                    </div>
+                                    <p class="text-slate-400 extra-small mb-2.5">Choose the time period for your practical session.</p>
+
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="extra-small text-slate-400 d-block mb-1 font-monospace" for="booking-start-time">START TIME</label>
+                                            <select class="form-select filter-select font-monospace" id="booking-start-time" required onchange="onFormInputChanged()">
+                                                <option value="08:00">08:00 AM</option>
+                                                <option value="09:00">09:00 AM</option>
+                                                <option value="11:00">11:00 AM</option>
+                                                <option value="14:00" selected>02:00 PM</option>
+                                                <option value="16:15">04:15 PM</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="extra-small text-slate-400 d-block mb-1 font-monospace" for="booking-end-time">END TIME</label>
+                                            <select class="form-select filter-select font-monospace" id="booking-end-time" required onchange="onFormInputChanged()">
+                                                <option value="09:00">09:00 AM</option>
+                                                <option value="11:00">11:00 AM</option>
+                                                <option value="13:00">01:00 PM</option>
+                                                <option value="16:00" selected>04:00 PM</option>
+                                                <option value="18:15">06:15 PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT COLUMN: Class Details -->
+                            <div class="col-12 col-lg-6 ps-lg-4">
+                                <h6 class="text-purple-highlight fw-bold extra-small tracking-wider text-uppercase mb-3">
+                                    <i class="bi bi-people me-1"></i> CLASS DETAILS
+                                </h6>
+
+                                <!-- Academic Year & Semester -->
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <label class="footer-meta-label d-block mb-1.5" for="booking-year">YEAR</label>
+                                        <select class="form-select filter-select" id="booking-year" onchange="onFormInputChanged()">
+                                            <option value="III Year" selected>III Year</option>
+                                            <option value="I Year">I Year</option>
+                                            <option value="II Year">II Year</option>
+                                            <option value="IV Year">IV Year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="footer-meta-label d-block mb-1.5" for="booking-semester">SEMESTER</label>
+                                        <select class="form-select filter-select" id="booking-semester" onchange="onFormInputChanged()">
+                                            <option value="V Semester" selected>V Semester</option>
+                                            <option value="VI Semester">VI Semester</option>
+                                            <option value="VII Semester">VII Semester</option>
+                                            <option value="VIII Semester">VIII Semester</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Section & Practical Batch -->
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <label class="footer-meta-label d-block mb-1.5" for="booking-section">SECTION</label>
+                                        <select class="form-select filter-select" id="booking-section" onchange="onFormInputChanged()">
+                                            <option value="Section B" selected>Section B</option>
+                                            <option value="Section A">Section A</option>
+                                            <option value="Section C">Section C</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="footer-meta-label d-block mb-1.5" for="booking-batch">PRACTICAL BATCH</label>
+                                        <select class="form-select filter-select" id="booking-batch" onchange="onFormInputChanged()">
+                                            <option value="Batch 1" selected>Batch 1</option>
+                                            <option value="Batch 2">Batch 2</option>
+                                            <option value="All Students">All Students</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Expected Student Strength -->
+                                <div class="mb-3">
+                                    <label class="footer-meta-label d-block mb-1.5" for="booking-students">EXPECTED STUDENT STRENGTH <span class="text-rose">*</span></label>
+                                    <input type="number" class="form-control faculty-search-input" id="booking-students" name="student_count" required min="1" max="100" placeholder="Enter number of students" oninput="onStudentCountInput()">
+                                </div>
+
+                                <!-- Faculty Lead Context (Read-Only Information Card) -->
+                                <div class="p-3 rounded mt-3" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);" id="faculty-incharge-card">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <span class="footer-meta-label">FACULTY IN-CHARGE</span>
+                                        <span class="badge extra-small px-2 py-0.5" id="faculty-incharge-badge" style="background-color: rgba(139, 111, 179, 0.15); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.3);">
+                                            Assigned Faculty
+                                        </span>
+                                    </div>
+                                    <div class="text-white fw-bold small" id="faculty-incharge-name">Dr. Murugesan</div>
+                                    <div class="text-slate-400 extra-small" id="faculty-incharge-dept">Artificial Intelligence &amp; Data Science</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Full Width Primary Action: CHECK AVAILABILITY -->
+                        <div class="pt-3 border-top border-secondary-subtle">
+                            <button type="submit" class="btn btn-booking-primary w-100 py-3" id="btn-check-availability">
+                                <i class="bi bi-calendar-check me-2"></i> CHECK AVAILABILITY
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2. RESULT STATE: LAB AVAILABLE -->
+                <div class="faculty-card p-3 p-lg-4 mb-4 d-none" id="slot-available-card">
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge badge-emerald-subtle extra-small fw-bold px-2.5 py-1">
+                                <i class="bi bi-check-circle-fill me-1 text-emerald"></i> LAB AVAILABLE
+                            </span>
+                            <span class="lab-code-pill font-monospace" id="avail-lab-code">DL-LAB-01</span>
+                        </div>
+                        <span class="text-emerald extra-small fw-semibold">Ready to reserve</span>
+                    </div>
+
+                    <p class="text-slate-200 small mb-3">Your selected laboratory is available for this practical session.</p>
+
+                    <!-- Full Booking Summary Grid -->
+                    <div class="row g-3 p-3 rounded mb-4" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                        <div class="col-12 col-md-6">
+                            <span class="footer-meta-label">LABORATORY</span>
+                            <div class="text-white fw-bold small" id="avail-lab-name">Advanced Computing &amp; AI Research Lab (DL-LAB-01)</div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <span class="footer-meta-label">PRACTICAL / SUBJECT</span>
+                            <div class="text-purple-highlight fw-bold small" id="avail-subject">Deep Learning Practical</div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <span class="footer-meta-label">DATE</span>
+                            <div class="text-slate-200 font-monospace small" id="avail-date">2026-09-02</div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <span class="footer-meta-label">TIME</span>
+                            <div class="text-white font-monospace fw-bold small" id="avail-time">02:00 PM — 04:00 PM</div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <span class="footer-meta-label">YEAR &amp; SEMESTER</span>
+                            <div class="text-slate-200 small" id="avail-year-sem">III Year • V Semester</div>
+                        </div>
+                        <div class="col-6 col-md-6">
+                            <span class="footer-meta-label">SECTION &amp; BATCH</span>
+                            <div class="text-slate-200 small" id="avail-class">Section B • Batch 1</div>
+                        </div>
+                        <div class="col-6 col-md-6">
+                            <span class="footer-meta-label">EXPECTED STUDENT STRENGTH</span>
+                            <div class="text-white font-monospace fw-bold small" id="avail-students">40 Students</div>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Booking Button -->
+                    <div class="pt-2 border-top border-secondary-subtle">
+                        <button type="button" class="btn btn-confirm-booking w-100 py-2.5" id="btn-confirm-booking" onclick="executeConfirmBooking()">
+                            <i class="bi bi-check-circle-fill me-1.5"></i> CONFIRM BOOKING
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. RESULT STATE: LAB NOT AVAILABLE (Conflict & Alternatives) -->
+                <div class="faculty-card p-3 p-lg-4 mb-4 d-none" id="slot-conflict-card">
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge badge-rose extra-small fw-bold px-2.5 py-1">
+                                <i class="bi bi-exclamation-octagon-fill me-1 text-rose"></i> LAB NOT AVAILABLE
+                            </span>
+                            <span class="lab-code-pill font-monospace" id="conflict-lab-code">DL-LAB-01</span>
+                        </div>
+                        <span class="text-rose extra-small fw-semibold">Scheduling Conflict</span>
+                    </div>
+
+                    <p class="text-slate-300 small mb-3">The selected laboratory is already booked during this time.</p>
+
+                    <!-- Conflicting Session Breakdown -->
+                    <div class="p-3 rounded mb-4" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                        <h6 class="text-rose fw-bold extra-small tracking-wider text-uppercase mb-2">
+                            <i class="bi bi-clock-history me-1"></i> CONFLICTING SESSION DETAILS
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-12 col-md-6">
+                                <span class="footer-meta-label">SUBJECT</span>
+                                <div class="text-white fw-bold small" id="conf-subject">Deep Learning Practical</div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <span class="footer-meta-label">DATE</span>
+                                <div class="text-slate-300 font-monospace small" id="conf-date">2026-09-02</div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <span class="footer-meta-label">OCCUPIED TIME</span>
+                                <div class="text-rose font-monospace fw-bold small" id="conf-time">02:00 PM — 04:00 PM</div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <span class="footer-meta-label">SECTION &amp; BATCH</span>
+                                <div class="text-slate-300 small" id="conf-class">Section A • Batch 1</div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <span class="footer-meta-label">FACULTY</span>
+                                <div class="text-slate-200 small" id="conf-faculty">Dr. Murugesan</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AVAILABLE ALTERNATIVES -->
+                    <div id="smart-alternatives-box">
+                        <div class="d-flex align-items-center justify-content-between mb-2.5">
+                            <span class="badge badge-purple-subtle extra-small fw-bold px-2.5 py-1">
+                                <i class="bi bi-lightbulb me-1 text-purple-highlight"></i> AVAILABLE ALTERNATIVES
+                            </span>
+                            <span class="text-slate-400 extra-small">Genuinely open slots</span>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2" id="alternatives-list">
+                            <!-- Dynamic Alternative Slot Cards Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. RESULT STATE: BOOKING CONFIRMED -->
+                <div class="faculty-card p-4 mb-4 d-none text-center" id="booking-confirmed-card">
+                    <div class="badge-emerald-subtle d-inline-flex align-items-center justify-content-center rounded-circle p-3 mb-3" style="width: 58px; height: 58px;">
+                        <i class="bi bi-check-lg fs-2 text-emerald"></i>
+                    </div>
+                    <h4 class="text-white fw-bold mb-1 fs-5">BOOKING CONFIRMED</h4>
+                    <p class="text-slate-400 small mb-4">Your laboratory practical session has been successfully booked and added to the timetable.</p>
+
+                    <!-- Confirmed Summary Box -->
+                    <div class="p-3 rounded mb-4 text-start mx-auto" style="max-width: 680px; background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <span class="footer-meta-label">✓ LABORATORY</span>
+                                <div class="text-white fw-bold small" id="confirmed-lab">Advanced Computing &amp; AI Research Lab (DL-LAB-01)</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span class="footer-meta-label">✓ PRACTICAL</span>
+                                <div class="text-purple-highlight fw-bold small" id="confirmed-subject">Deep Learning Practical</div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <span class="footer-meta-label">✓ DATE</span>
+                                <div class="text-slate-200 font-monospace small" id="confirmed-date">2026-09-02</div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <span class="footer-meta-label">✓ TIME</span>
+                                <div class="text-white font-monospace fw-bold small" id="confirmed-time">04:15 PM — 06:15 PM</div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <span class="footer-meta-label">✓ CLASS / STUDENTS</span>
+                                <div class="text-slate-200 small" id="confirmed-class">Section B • Batch 1 (40 Students)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2 pt-2">
+                        <a href="/dashboard/faculty/sessions" class="btn btn-booking-primary py-2 px-4 flex-grow-1 flex-sm-grow-0 text-center">
+                            <i class="bi bi-calendar3 me-1.5"></i> VIEW LAB SCHEDULE
+                        </a>
+                        <button type="button" class="btn btn-outline-custom rounded-pill px-4 py-2 small fw-semibold flex-grow-1 flex-sm-grow-0" onclick="resetBookingForm()">
+                            <i class="bi bi-plus-circle me-1.5"></i> BOOK ANOTHER LAB
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- LOGOUT CONFIRMATION MODAL -->
+    <div class="modal fade" id="facultyLogoutModal" tabindex="-1" aria-labelledby="facultyLogoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content modal-content-dark p-2">
+                <div class="modal-header modal-header-dark border-0 pb-1">
+                    <h6 class="modal-title text-white fw-bold d-flex align-items-center gap-2" id="facultyLogoutModalLabel">
+                        <i class="bi bi-box-arrow-right text-rose"></i> Confirm Sign Out
+                    </h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div id="faculty-logout-alert" class="alert alert-danger extra-small mb-2 d-none"></div>
+                    <p class="text-slate-300 extra-small mb-0">Are you sure you want to sign out of the Faculty Portal?</p>
+                </div>
+                <div class="modal-footer modal-footer-dark border-0 pt-2 gap-2">
+                    <button type="button" class="btn btn-sm btn-modal-cancel rounded-pill px-3 flex-grow-1" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-modal-confirm-logout rounded-pill px-3 flex-grow-1" id="btn-confirm-faculty-logout" onclick="executeFacultyLogout()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST POPUP NOTIFICATION -->
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1080; pointer-events: none; max-width: 380px; width: 100%;"></div>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Dedicated Faculty Booking JS -->
+    <script src="/js/faculty_booking.js"></script>
+    <script src="/js/faculty_notifications.js"></script>
+</body>
+</html>

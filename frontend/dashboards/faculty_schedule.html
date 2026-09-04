@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Schedule - LabFlow Lite Faculty Portal</title>
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Custom Faculty CSS -->
+    <link rel="stylesheet" href="/css/faculty.css">
+</head>
+<body class="faculty-body">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay d-none" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- 1. PERSISTENT FACULTY SIDEBAR -->
+    <aside class="faculty-sidebar" id="faculty-sidebar">
+        <!-- Brand Header with Logo -->
+        <div class="sidebar-brand-header">
+            <a href="/dashboard/faculty" class="brand-link">
+                <img src="/assets/images/logo.png" alt="LabFlow Lite Logo" class="sidebar-logo-img">
+                <div>
+                    <div class="brand-title">LabFlow <span class="text-purple-highlight">Lite</span></div>
+                    <div class="brand-badge-tag">FACULTY PORTAL</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Scrollable Navigation Items -->
+        <div class="sidebar-scrollable-content">
+            <nav class="sidebar-nav">
+                <!-- Section 1: Core Portal -->
+                <div class="nav-section-title">CORE</div>
+                <a href="/dashboard/faculty" class="nav-item-link">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/dashboard/faculty/sessions" class="nav-item-link">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Today's Sessions</span>
+                </a>
+
+                <!-- Section 2: Laboratory & Assets -->
+                <div class="nav-section-title">LABORATORIES</div>
+                <a href="/dashboard/faculty/labs" class="nav-item-link">
+                    <i class="bi bi-building"></i>
+                    <span>Our Labs</span>
+                </a>
+                <a href="/dashboard/faculty/equipment" class="nav-item-link">
+                    <i class="bi bi-hdd-rack"></i>
+                    <span>Equipment</span>
+                </a>
+                <a href="/dashboard/faculty/qr-scanner" class="nav-item-link">
+                    <i class="bi bi-qr-code-scan"></i>
+                    <span>QR Scanner</span>
+                </a>
+                <a href="/dashboard/faculty/booking" class="nav-item-link">
+                    <i class="bi bi-calendar2-plus"></i>
+                    <span>Smart Booking</span>
+                </a>
+                <a href="/dashboard/faculty/schedule" class="nav-item-link active">
+                    <i class="bi bi-calendar3"></i>
+                    <span>Lab Schedule</span>
+                </a>
+
+                <!-- Section 3: Operations & Intelligence -->
+                <div class="nav-section-title">OPERATIONS</div>
+                <a href="/dashboard/faculty/usage-history" class="nav-item-link">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Usage History</span>
+                </a>
+                <a href="/dashboard/faculty/fault-reports" class="nav-item-link">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span>Fault Reports</span>
+                </a>
+                <a href="/dashboard/faculty/disruption-prediction" class="nav-item-link">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Disruption Prediction</span>
+                </a>
+
+                <!-- Section 4: Account -->
+                <div class="nav-section-title">ACCOUNT</div>
+                <a href="/dashboard/faculty/profile" class="nav-item-link">
+                    <i class="bi bi-person-gear"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer / Logout -->
+        <div class="sidebar-footer">
+            <button type="button" class="btn-sidebar-logout" onclick="openLogoutModal()">
+                <i class="bi bi-box-arrow-right"></i> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN SCHEDULE WORKSPACE -->
+    <main class="faculty-main-content">
+        <!-- Top Navigation Bar Header -->
+        <header class="top-nav-bar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-sidebar-toggle d-lg-none" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle Navigation">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                <div>
+                    <span class="badge badge-portal-header extra-small px-3 py-1 mb-1">
+                        FACULTY WORKSPACE
+                    </span>
+                    <h4 class="text-white fw-bold mb-0">Lab Schedule</h4>
+                </div>
+            </div>
+
+            <!-- Faculty Profile & Info on Right -->
+            <div class="d-flex align-items-center gap-3">
+                <a href="/dashboard/faculty/booking" class="btn btn-sm btn-purple-subtle d-none d-md-inline-flex align-items-center gap-1.5 rounded-pill px-3 py-1.5 extra-small fw-semibold">
+                    <i class="bi bi-plus-circle"></i> New Booking
+                </a>
+
+                <!-- NOTIFICATION BELL DROPDOWN WRAPPER -->
+                <div class="position-relative" id="faculty-notification-bell-wrapper">
+                    <button type="button" class="btn-nav-icon position-relative" id="btn-faculty-notification-bell" onclick="toggleFacultyNotificationDropdown(event)" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill d-none" id="faculty-notification-unread-badge" style="background-color: #8B6FB3; color: #FFFFFF; font-size: 10px; padding: 3px 6px; border: 2px solid #111014;">
+                            0
+                        </span>
+                    </button>
+
+                    <!-- DROPDOWN PANEL OVERLAY -->
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow-lg d-none" id="faculty-notification-dropdown-panel" style="width: 360px; max-width: 90vw; background-color: #211E27; border: 1px solid #38323F; border-radius: 12px; position: absolute; right: 0; top: 48px; z-index: 99999; font-family: var(--font-main);">
+                        <div class="d-flex align-items-center justify-content-between p-3" style="border-bottom: 1px solid #38323F; background-color: #19171F; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-bell-fill" style="color: #8B6FB3;"></i>
+                                <span class="fw-bold text-white fs-6">Notifications</span>
+                                <span class="badge px-2 py-0.5 rounded-pill font-monospace extra-small" id="faculty-dropdown-unread-count" style="background-color: rgba(139, 111, 179, 0.2); color: #B99AD9;">0 unread</span>
+                            </div>
+                            <button type="button" class="btn btn-link text-decoration-none p-0 extra-small fw-semibold" onclick="markAllFacultyNotificationsAsRead()" style="color: #B99AD9;">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div id="faculty-notification-dropdown-list" style="max-height: 340px; overflow-y: auto;">
+                            <!-- Dynamically populated notifications -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-2.5 ps-2 border-start border-slate-800">
+                    <div class="faculty-avatar-circle" id="faculty-avatar-initials">
+                        DM
+                    </div>
+                    <div class="d-none d-sm-block">
+                        <div class="text-white fw-bold small text-truncate" style="max-width: 180px;" id="faculty-nav-name">Dr. Murugesan</div>
+                        <div class="d-flex align-items-center gap-1.5 extra-small">
+                            <span class="badge badge-faculty-role">FACULTY</span>
+                            <span class="text-slate-400 font-monospace text-truncate" style="max-width: 140px;" id="faculty-nav-dept">AI &amp; DS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Body Container -->
+        <div class="workspace-body-container">
+            
+            <!-- 1. PAGE HEADER ROW -->
+            <div class="page-title-header-card mb-4">
+                <div class="header-flex-wrapper">
+                    <div class="header-text-content">
+                        <div class="header-tag-pill mb-1">FACULTY LAB SCHEDULE</div>
+                        <h2 class="page-main-title text-white fw-bold mb-1">Laboratory Schedule</h2>
+                        <p class="text-secondary-label mb-0">View and manage your laboratory sessions across the academic week.</p>
+                    </div>
+                    <div class="header-date-wrapper">
+                        <div class="date-pill-container" id="faculty-identity-pill">
+                            <i class="bi bi-person-check text-purple-highlight"></i>
+                            <span class="date-pill-text text-white fw-semibold" id="header-faculty-label">Dr. Murugesan • AI &amp; DS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. WEEK NAVIGATION BAR -->
+            <div class="faculty-card mb-4 p-3 p-lg-3">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <!-- Week Navigation Buttons -->
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-outline-custom rounded-pill px-3 py-1.5 extra-small fw-semibold" id="btn-prev-week" onclick="navigateWeek(-1)">
+                            <i class="bi bi-chevron-left me-1"></i> Previous Week
+                        </button>
+                        <button type="button" class="btn btn-purple-subtle rounded-pill px-3 py-1.5 extra-small fw-semibold" id="btn-current-week" onclick="navigateWeek(0)">
+                            <i class="bi bi-calendar-check me-1"></i> Today
+                        </button>
+                        <button type="button" class="btn btn-outline-custom rounded-pill px-3 py-1.5 extra-small fw-semibold" id="btn-next-week" onclick="navigateWeek(1)">
+                            Next Week <i class="bi bi-chevron-right ms-1"></i>
+                        </button>
+                    </div>
+
+                    <!-- Selected Week Range Display -->
+                    <div class="d-flex align-items-center justify-content-center gap-2 text-center">
+                        <i class="bi bi-calendar-range text-purple-highlight fs-6"></i>
+                        <span class="text-white fw-bold fs-6 font-monospace" id="schedule-week-range">31 Aug – 05 Sep 2026</span>
+                    </div>
+
+                    <!-- Week Total Sessions Counter -->
+                    <div class="text-md-end">
+                        <span class="badge badge-purple-pill px-3 py-1.5 rounded-pill extra-small fw-semibold font-monospace" id="week-sessions-counter">
+                            0 Scheduled Sessions
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. COMPACT SCHEDULE FILTERS -->
+            <div class="faculty-card mb-4 p-3 p-lg-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-funnel text-purple-highlight fs-5"></i>
+                        <span class="text-white fw-bold small tracking-wider text-uppercase">Schedule Filters</span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-3 py-1 extra-small" onclick="resetScheduleFilters()">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Reset Filters
+                    </button>
+                </div>
+
+                <div class="row g-3">
+                    <!-- Lab Filter -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label class="filter-label" for="filter-schedule-lab">LABORATORY</label>
+                        <select class="form-select filter-select" id="filter-schedule-lab" onchange="applyScheduleFilters()">
+                            <option value="all">All Labs</option>
+                        </select>
+                    </div>
+
+                    <!-- Batch Filter -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label class="filter-label" for="filter-schedule-batch">PRACTICAL BATCH</label>
+                        <select class="form-select filter-select" id="filter-schedule-batch" onchange="applyScheduleFilters()">
+                            <option value="all">All Batches</option>
+                            <option value="Batch 1">Batch 1</option>
+                            <option value="Batch 2">Batch 2</option>
+                            <option value="All Students">All Students</option>
+                        </select>
+                    </div>
+
+                    <!-- Section Filter -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label class="filter-label" for="filter-schedule-section">SECTION</label>
+                        <select class="form-select filter-select" id="filter-schedule-section" onchange="applyScheduleFilters()">
+                            <option value="all">All Sections</option>
+                            <option value="Section A">Section A</option>
+                            <option value="Section B">Section B</option>
+                            <option value="Section C">Section C</option>
+                        </select>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label class="filter-label" for="filter-schedule-status">STATUS</label>
+                        <select class="form-select filter-select" id="filter-schedule-status" onchange="applyScheduleFilters()">
+                            <option value="all">All Statuses</option>
+                            <option value="UPCOMING">Upcoming</option>
+                            <option value="IN SESSION">In Session</option>
+                            <option value="COMPLETED">Completed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. WEEKLY TIMETABLE GRID (DESKTOP / TABLET) -->
+            <div class="faculty-card p-3 p-lg-4 d-none d-md-block timetable-container-card">
+                <div class="table-responsive">
+                    <table class="table faculty-timetable-table mb-0">
+                        <thead>
+                            <tr id="timetable-header-row">
+                                <th class="time-col-header">TIME</th>
+                                <th class="day-col-header" id="th-day-0"><div class="day-name">MON</div><div class="day-date">31 AUG</div></th>
+                                <th class="day-col-header" id="th-day-1"><div class="day-name">TUE</div><div class="day-date">01 SEP</div></th>
+                                <th class="day-col-header" id="th-day-2"><div class="day-name">WED</div><div class="day-date">02 SEP</div></th>
+                                <th class="day-col-header" id="th-day-3"><div class="day-name">THU</div><div class="day-date">03 SEP</div></th>
+                                <th class="day-col-header" id="th-day-4"><div class="day-name">FRI</div><div class="day-date">04 SEP</div></th>
+                                <th class="day-col-header" id="th-day-5"><div class="day-name">SAT</div><div class="day-date">05 SEP</div></th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetable-body">
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-slate-400">
+                                    <div class="spinner-border spinner-border-sm text-purple me-2" role="status"></div>
+                                    Loading weekly laboratory schedule...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 5. MOBILE AGENDA VIEW (ACCORDION / SEGMENTED TABS FOR SMALL SCREENS) -->
+            <div class="d-md-none">
+                <!-- Day Selector Tabs -->
+                <div class="mobile-day-selector-strip mb-3" id="mobile-day-tabs">
+                    <!-- Populated dynamically: MON 31, TUE 01, etc. -->
+                </div>
+
+                <!-- Active Day Sessions List Container -->
+                <div id="mobile-sessions-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 6. SESSION DETAIL MODAL -->
+    <div class="modal fade" id="sessionDetailModal" tabindex="-1" aria-labelledby="sessionDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-dark p-3">
+                <div class="modal-header modal-header-dark border-0 pb-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="status-pill status-available extra-small" id="modal-status-badge">UPCOMING</span>
+                        <span class="lab-code-pill font-monospace" id="modal-lab-code">DL-LAB-01</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <h4 class="text-white fw-bold mb-1" id="modal-subject-name">Deep Learning Practical</h4>
+                    <div class="text-purple-highlight small fw-semibold mb-3" id="modal-lab-name">Advanced Computing &amp; AI Research Lab</div>
+
+                    <!-- Details Grid -->
+                    <div class="p-3 rounded mb-3" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <span class="footer-meta-label d-block mb-1">DATE</span>
+                                <span class="text-white small fw-bold font-monospace" id="modal-date">2026-09-03</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="footer-meta-label d-block mb-1">TIME SLOT</span>
+                                <span class="text-white small fw-bold font-monospace" id="modal-time">02:00 PM — 04:00 PM</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="footer-meta-label d-block mb-1">LOCATION</span>
+                                <span class="text-slate-300 extra-small" id="modal-location">Block A, 3rd Floor, Room 310</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="footer-meta-label d-block mb-1">STUDENT STRENGTH</span>
+                                <span class="text-white small fw-bold" id="modal-students">40 Students</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Chips Context -->
+                    <div class="p-3 rounded mb-3" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                        <span class="footer-meta-label d-block mb-2">ACADEMIC ALLOCATION</span>
+                        <div class="session-chips-row">
+                            <span class="academic-chip chip-dept" id="modal-dept">AI &amp; DS</span>
+                            <span class="academic-chip" id="modal-year">III Year</span>
+                            <span class="academic-chip" id="modal-sem">V Semester</span>
+                            <span class="academic-chip chip-section" id="modal-section">Section B</span>
+                            <span class="academic-chip chip-batch" id="modal-batch">Batch 1</span>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Context -->
+                    <div class="d-flex align-items-center justify-content-between p-3 rounded" style="background-color: var(--bg-sidebar); border: 1px solid var(--border);">
+                        <div>
+                            <span class="footer-meta-label d-block mb-1">FACULTY IN-CHARGE</span>
+                            <span class="text-white small fw-bold" id="modal-faculty">Dr. Murugesan</span>
+                        </div>
+                        <span class="badge badge-purple-subtle extra-small px-2.5 py-1">Assigned Lead</span>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer-dark border-0 pt-2">
+                    <button type="button" class="btn btn-sm btn-outline-custom rounded-pill px-4 w-100" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGOUT CONFIRMATION MODAL -->
+    <div class="modal fade" id="facultyLogoutModal" tabindex="-1" aria-labelledby="facultyLogoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content modal-content-dark p-2">
+                <div class="modal-header modal-header-dark border-0 pb-1">
+                    <h6 class="modal-title text-white fw-bold d-flex align-items-center gap-2" id="facultyLogoutModalLabel">
+                        <i class="bi bi-box-arrow-right text-rose"></i> Confirm Sign Out
+                    </h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <p class="text-slate-300 extra-small mb-0">Are you sure you want to sign out of the Faculty Portal?</p>
+                </div>
+                <div class="modal-footer modal-footer-dark border-0 pt-2 gap-2">
+                    <button type="button" class="btn btn-sm btn-modal-cancel rounded-pill px-3 flex-grow-1" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-modal-confirm-logout rounded-pill px-3 flex-grow-1" onclick="executeFacultyLogout()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Faculty Schedule JS -->
+    <script src="/js/faculty_schedule.js"></script>
+    <script src="/js/faculty_notifications.js"></script>
+</body>
+</html>

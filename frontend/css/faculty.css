@@ -1,0 +1,3378 @@
+/* ==========================================================================
+   LabFlow Lite - Dedicated Faculty & Staff Portal Stylesheet
+   Theme: Premium Dark Plum / Purple Professional College Architecture
+   ========================================================================== */
+
+:root {
+    --bg-primary: #111014;
+    --bg-sidebar: #18161D;
+    --bg-card: #211E27;
+    --bg-card-hover: #292531;
+    --bg-input: #19171F;
+    --border: #38323F;
+    --border-light: rgba(139, 111, 179, 0.25);
+    
+    --accent-primary: #8B6FB3;
+    --accent-hover: #A184C7;
+    --accent-light: #B99AD9;
+    --accent-subtle: rgba(139, 111, 179, 0.15);
+    
+    --text-primary: #F3F0F5;
+    --text-secondary: #B2AAB8;
+    --text-muted: #817986;
+    
+    --success: #79A88A;
+    --success-subtle: rgba(121, 168, 138, 0.15);
+    --warning: #C39A5A;
+    --warning-subtle: rgba(195, 154, 90, 0.15);
+    --error: #B8757B;
+    --error-subtle: rgba(184, 117, 123, 0.15);
+    
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+}
+
+/* Base Body */
+body.faculty-body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Typography Utilities */
+.extra-small { font-size: 0.76rem; }
+.tracking-wider { letter-spacing: 0.06em; }
+.tracking-tight { letter-spacing: -0.025em; }
+
+/* ==========================================================================
+   1. SIDEBAR ARCHITECTURE
+   ========================================================================== */
+.faculty-sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 1040;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sidebar-brand-header {
+    padding: 1.25rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.brand-icon-box {
+    width: 38px;
+    height: 38px;
+    background-color: var(--accent-primary);
+    color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+}
+
+.brand-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.text-purple-highlight {
+    color: var(--accent-light);
+}
+
+.brand-badge-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-light);
+    margin-top: 2px;
+}
+
+.sidebar-scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem 0.85rem;
+}
+
+.sidebar-scrollable-content::-webkit-scrollbar {
+    width: 5px;
+}
+.sidebar-scrollable-content::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 4px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.nav-section-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 1.1rem 0 0.35rem 0.65rem;
+}
+
+.nav-item-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.58rem 0.75rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 500;
+    transition: all 0.18s ease;
+    border: 1px solid transparent;
+}
+
+.nav-item-link i {
+    font-size: 1rem;
+    color: var(--text-muted);
+    transition: color 0.18s ease;
+}
+
+.nav-item-link:hover {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+.nav-item-link:hover i {
+    color: var(--accent-light);
+}
+
+.nav-item-link.active {
+    background-color: var(--bg-card);
+    color: var(--accent-light);
+    font-weight: 600;
+    border-left: 3px solid var(--accent-primary);
+    border-color: var(--border) var(--border) var(--border) var(--accent-primary);
+}
+
+.nav-item-link.active i {
+    color: var(--accent-primary);
+}
+
+.sidebar-footer {
+    padding: 1rem 1.15rem;
+    border-top: 1px solid var(--border);
+    background-color: var(--bg-sidebar);
+}
+
+.btn-sidebar-logout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--error);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-sidebar-logout:hover {
+    background-color: var(--error-subtle);
+    border-color: var(--error);
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   2. MAIN WORKSPACE CONTENT
+   ========================================================================== */
+.faculty-main-content {
+    margin-left: 260px;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+}
+
+.top-nav-bar {
+    height: 70px;
+    background-color: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.badge-portal-header {
+    background-color: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+}
+
+.btn-nav-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-nav-icon:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-light);
+}
+
+.faculty-avatar-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
+    border: 2px solid var(--accent-primary);
+    color: var(--accent-light);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.02em;
+}
+
+.badge-faculty-role {
+    background-color: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    font-weight: 700;
+}
+
+.btn-sidebar-toggle {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+}
+
+.workspace-body-container {
+    padding: 2rem;
+    flex: 1;
+}
+
+/* ==========================================================================
+   3. STATS CARDS & CORE PANELS
+   ========================================================================== */
+.faculty-stat-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    height: 100%;
+}
+
+.faculty-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.stat-card-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.stat-card-value {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0.35rem 0 0.25rem;
+}
+
+.stat-card-subtext {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.stat-icon-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.faculty-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.card-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.card-title-text {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.card-subtitle-text {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.card-action-link {
+    font-size: 0.85rem;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.18s ease;
+}
+
+.card-action-link:hover {
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   4. TABLES & LAB STATUS
+   ========================================================================== */
+.faculty-table {
+    --bs-table-bg: transparent;
+    color: var(--text-primary);
+    margin-bottom: 0;
+}
+
+.faculty-table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0.85rem;
+    background-color: transparent;
+}
+
+.faculty-table tbody td {
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0.85rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.faculty-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.faculty-table tbody tr:hover td {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.lab-status-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    height: 100%;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.lab-status-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: #1e1b24;
+}
+
+.lab-code-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-light);
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+
+/* Quick Actions List */
+.quick-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    text-align: left;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.quick-action-btn:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--accent-primary);
+    transform: translateX(2px);
+}
+
+.action-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.action-text-content {
+    flex: 1;
+}
+
+.action-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.action-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.action-arrow {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.quick-action-btn:hover .action-arrow {
+    color: var(--accent-light);
+    transform: translateX(2px);
+}
+
+/* Activity Feed */
+.activity-feed-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.activity-item {
+    display: flex;
+    gap: 0.85rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.activity-icon-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.activity-title {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.activity-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: 2px;
+}
+
+.activity-time {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* Status Badges & Pills */
+.badge-purple {
+    background-color: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid var(--border-light);
+}
+
+.badge-cyan {
+    background-color: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid var(--border-light);
+}
+
+.badge-emerald {
+    background-color: var(--success-subtle);
+    color: var(--success);
+    border: 1px solid rgba(121, 168, 138, 0.3);
+}
+
+.badge-rose {
+    background-color: var(--error-subtle);
+    color: var(--error);
+    border: 1px solid rgba(184, 117, 123, 0.3);
+}
+
+.badge-amber {
+    background-color: var(--warning-subtle);
+    color: var(--warning);
+    border: 1px solid rgba(195, 154, 90, 0.3);
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-pill::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+.status-available { background-color: var(--success-subtle); color: var(--success); border: 1px solid rgba(121, 168, 138, 0.25); }
+.status-insession { background-color: var(--accent-subtle); color: var(--accent-light); border: 1px solid var(--border-light); }
+.status-booked { background-color: var(--warning-subtle); color: var(--warning); border: 1px solid rgba(195, 154, 90, 0.25); }
+.status-maintenance { background-color: var(--error-subtle); color: var(--error); border: 1px solid rgba(184, 117, 123, 0.25); }
+
+/* Modal Customization */
+.modal-content-dark {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-header-dark {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-footer-dark {
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border);
+}
+
+.btn-modal-cancel {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+.btn-modal-cancel:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.btn-modal-confirm-logout {
+    background-color: var(--error);
+    color: #FFFFFF;
+    border: none;
+    font-weight: 600;
+}
+.btn-modal-confirm-logout:hover {
+    background-color: #c98288;
+    color: #FFFFFF;
+}
+
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1030;
+    backdrop-filter: blur(2px);
+}
+
+/* ==========================================================================
+   5. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    .faculty-sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .faculty-sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .faculty-main-content {
+        margin-left: 0;
+    }
+    
+    .top-nav-bar {
+        padding: 0 1rem;
+    }
+    
+    .workspace-body-container {
+        padding: 1.25rem 1rem;
+    }
+}
+
+
+/* Academic Context Bar */
+.academic-context-bar {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.context-pill {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+/* Spotlight Cards */
+.spotlight-card-active {
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.12) 0%, rgba(33, 30, 39, 0.95) 100%);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(139, 111, 179, 0.15);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+}
+
+.live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-light);
+    box-shadow: 0 0 8px var(--accent-light);
+    animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.spotlight-card-next {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+}
+
+/* Filter Bar */
+.filter-bar-container {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-input, .filter-select {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+}
+
+.filter-input:focus, .filter-select:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 2px rgba(139, 111, 179, 0.2) !important;
+}
+
+/* Session Card Item */
+.session-card-item {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    transition: all 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+.session-card-item:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.session-time-block {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent-light);
+}
+
+.session-lab-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.session-tag-chip {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.btn-dark-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.btn-dark-card:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+}
+
+
+/* ==========================================================================
+   LABFLOW LITE — TODAY'S SESSIONS REFINED UI/UX STYLES
+   ========================================================================== */
+
+/* Page Header */
+.page-title-header-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+}
+
+.header-flex-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.header-text-content {
+    flex: 1;
+    min-width: 280px;
+}
+
+.header-tag-pill {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+}
+
+.page-main-title {
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+}
+
+.text-secondary-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.header-date-wrapper {
+    flex-shrink: 0;
+}
+
+.date-pill-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.date-pill-container:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.date-pill-icon {
+    font-size: 17px;
+    line-height: 1;
+    color: var(--accent-light);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.date-pill-text {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+@media (max-width: 767px) {
+    .page-title-header-card {
+        padding: 1.25rem 1.25rem;
+    }
+
+    .header-flex-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-text-content {
+        min-width: 100%;
+    }
+
+    .header-date-wrapper {
+        width: 100%;
+    }
+
+    .date-pill-container {
+        display: inline-flex;
+        max-width: 100%;
+    }
+
+    .date-pill-text {
+        white-space: normal;
+        word-break: break-word;
+    }
+}
+
+/* Academic Context 4-Block Grid */
+.badge-purple-subtle {
+    background-color: rgba(139, 111, 179, 0.12);
+    color: var(--accent-light);
+    border: 1px solid rgba(139, 111, 179, 0.25);
+}
+
+.academic-context-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 991px) {
+    .academic-context-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575px) {
+    .academic-context-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.context-block {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1.15rem;
+    transition: border-color 0.2s ease;
+}
+
+.context-block:hover {
+    border-color: var(--accent-primary);
+}
+
+.context-block-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.context-block-value {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+/* Summary Cards Refinement */
+.faculty-stat-card-refined {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    height: 100%;
+    transition: all 0.2s ease;
+}
+
+.faculty-stat-card-refined:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.stat-card-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+}
+
+/* Filter Sessions Section */
+.filter-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+@media (max-width: 767px) {
+    .filter-controls-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.filter-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.filter-select {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.88rem !important;
+}
+
+.filter-select:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 2px rgba(139, 111, 179, 0.2) !important;
+}
+
+/* Section Header Badge */
+.badge-purple-pill {
+    background-color: rgba(139, 111, 179, 0.18);
+    color: var(--accent-light);
+    border: 1px solid rgba(139, 111, 179, 0.35);
+}
+
+/* Session Cards Stack */
+.session-cards-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.session-card-refined {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    transition: all 0.2s ease;
+}
+
+.session-card-refined:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Current In-Session Live Highlight */
+.session-card-live {
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.08) 0%, rgba(33, 30, 39, 0.98) 100%);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(139, 111, 179, 0.15);
+}
+
+.session-card-live:hover {
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.12) 0%, rgba(41, 37, 49, 1) 100%);
+    border-color: var(--accent-hover);
+}
+
+.live-indicator-pill {
+    background-color: rgba(121, 168, 138, 0.15);
+    color: #79A88A;
+    border: 1px solid rgba(121, 168, 138, 0.35);
+    border-radius: 50rem;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.live-dot-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #79A88A;
+    box-shadow: 0 0 6px #79A88A;
+    animation: livePulse 1.8s infinite;
+}
+
+@keyframes livePulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* Session Card Top Row */
+.session-card-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.session-time-pill {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.session-subject-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* Lab Info Block */
+.session-lab-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.lab-code-pill {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.76rem;
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+.session-location-subtext {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* Academic Chips Row */
+.session-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.academic-chip {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.academic-chip.chip-dept {
+    color: var(--accent-light);
+    border-color: rgba(139, 111, 179, 0.3);
+}
+
+.academic-chip.chip-section {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.academic-chip.chip-batch {
+    color: var(--accent-light);
+    background-color: rgba(139, 111, 179, 0.1);
+    border-color: var(--accent-primary);
+    font-weight: 600;
+}
+
+/* Session Footer (Faculty & Students) */
+.session-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.footer-meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.footer-meta-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.footer-meta-val {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+
+/* Shared Lab Card Styling */
+.shared-lab-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    height: 100%;
+    transition: all 0.2s ease;
+}
+
+.shared-lab-card:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.fs-7 {
+    font-size: 0.88rem !important;
+}
+
+
+/* ==========================================================================
+   LABFLOW LITE — OUR LABS MODULE STYLES
+   ========================================================================== */
+
+/* Shared Resource Callout Card */
+.shared-resource-callout-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+}
+
+.callout-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Primary Active Lab Card */
+.primary-active-lab-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    transition: all 0.2s ease;
+}
+
+.primary-lab-live {
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.08) 0%, rgba(33, 30, 39, 0.98) 100%);
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(139, 111, 179, 0.15);
+}
+
+.active-session-subcard {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+}
+
+/* Shared Lab Structured Card */
+.shared-lab-card-structured {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    transition: all 0.2s ease;
+}
+
+.shared-lab-card-structured:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.shared-card-live {
+    border-color: rgba(139, 111, 179, 0.4);
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.05) 0%, rgba(33, 30, 39, 0.98) 100%);
+}
+
+.lab-card-icon-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+}
+
+.header-controls-box {
+    min-width: 320px;
+}
+
+.lab-search-group {
+    min-width: 220px;
+    flex: 1;
+}
+
+.lab-status-select {
+    min-width: 140px;
+}
+
+@media (max-width: 767px) {
+    .header-controls-box {
+        width: 100%;
+        min-width: 100%;
+    }
+    .lab-search-group {
+        width: 100%;
+        min-width: 100%;
+    }
+    .lab-status-select {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+
+/* ==========================================================================
+   LABFLOW LITE — SIMPLIFIED OUR LABS MODULE STYLES
+   ========================================================================== */
+
+.labs-focus-container {
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.coherent-lab-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    transition: all 0.2s ease;
+}
+
+.coherent-lab-card:hover {
+    border-color: var(--accent-primary);
+}
+
+.coherent-lab-live {
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.08) 0%, rgba(33, 30, 39, 0.98) 100%);
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(139, 111, 179, 0.15);
+}
+
+.lab-session-row-item {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.lab-session-row-item:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.session-row-live {
+    background: linear-gradient(135deg, rgba(139, 111, 179, 0.12) 0%, rgba(33, 30, 39, 0.95) 100%);
+    border-color: var(--accent-primary);
+}
+
+@media (max-width: 767px) {
+    .coherent-lab-card {
+        padding: 1.25rem 1.25rem;
+    }
+}
+
+
+/* Session Row Card in Our Labs */
+.lab-session-card-refined {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.lab-session-card-refined:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.session-time-col {
+    min-width: 175px;
+}
+
+.session-subject-col {
+    flex: 1;
+}
+
+@media (max-width: 991px) {
+    .session-time-col {
+        min-width: auto;
+    }
+}
+
+
+/* ==========================================================================
+   LABFLOW LITE — FACULTY EQUIPMENT & HEALTH REFINED STYLES
+   ========================================================================== */
+
+/* Search Input with Integrated Icon */
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-input-icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.faculty-search-input {
+    background-color: var(--bg-sidebar) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+    padding-left: 2.25rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+    font-size: 0.84rem !important;
+    height: 34px !important;
+    transition: all 0.2s ease !important;
+}
+
+.faculty-search-input:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 2px rgba(139, 111, 179, 0.25) !important;
+    background-color: var(--bg-sidebar) !important;
+    color: #ffffff !important;
+}
+
+.faculty-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Equipment Card Container */
+.faculty-equipment-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.faculty-equipment-card:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.eq-card-faulty {
+    border-color: rgba(224, 108, 117, 0.35);
+}
+
+.eq-icon-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+}
+
+/* Clear, High-Contrast Professional View Details Action */
+.btn-eq-details {
+    background-color: rgba(139, 111, 179, 0.12);
+    border: 1px solid rgba(139, 111, 179, 0.35);
+    color: #F3F0F5;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-eq-details:hover {
+    background-color: rgba(139, 111, 179, 0.25);
+    border-color: var(--accent-light);
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(139, 111, 179, 0.2);
+}
+
+.btn-eq-details:active {
+    transform: scale(0.99);
+}
+
+.bg-rose-subtle {
+    background-color: rgba(224, 108, 117, 0.12) !important;
+}
+
+.border-rose-subtle {
+    border-color: rgba(224, 108, 117, 0.3) !important;
+}
+
+.status-faulty {
+    background-color: rgba(224, 108, 117, 0.15);
+    color: var(--error);
+    border: 1px solid rgba(224, 108, 117, 0.35);
+}
+
+
+/* ==========================================================================
+   LABFLOW LITE — FACULTY QR SCANNER & CAMERA CONTROLS STYLES
+   ========================================================================== */
+
+.qr-viewfinder-box {
+    width: 100%;
+    max-width: 440px;
+    height: 270px;
+    margin: 0 auto 1.25rem auto;
+    position: relative;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.qr-video-feed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Corner Indicators */
+.qr-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--accent-light);
+    border-style: solid;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.corner-tl {
+    top: 14px;
+    left: 14px;
+    border-width: 3px 0 0 3px;
+    border-top-left-radius: 6px;
+}
+
+.corner-tr {
+    top: 14px;
+    right: 14px;
+    border-width: 3px 3px 0 0;
+    border-top-right-radius: 6px;
+}
+
+.corner-bl {
+    bottom: 14px;
+    left: 14px;
+    border-width: 0 0 3px 3px;
+    border-bottom-left-radius: 6px;
+}
+
+.corner-br {
+    bottom: 14px;
+    right: 14px;
+    border-width: 0 3px 3px 0;
+    border-bottom-right-radius: 6px;
+}
+
+/* Laser Scanline Animation */
+.qr-laser-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-light), var(--accent-primary), transparent);
+    box-shadow: 0 0 8px var(--accent-primary);
+    animation: qrScanMove 2.2s infinite ease-in-out;
+    z-index: 4;
+}
+
+@keyframes qrScanMove {
+    0% { top: 20px; opacity: 0.2; }
+    50% { top: 245px; opacity: 1; }
+    100% { top: 20px; opacity: 0.2; }
+}
+
+.scanner-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(139, 111, 179, 0.12);
+    border: 1px solid rgba(139, 111, 179, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dedicated Camera Controls Container & Buttons */
+.camera-controls-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 5;
+    clear: both;
+}
+
+.btn-purple, .btn-purple-solid {
+    background-color: #8B6FB3 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #A68BC9 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(139, 111, 179, 0.35) !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+}
+
+.btn-purple:hover, .btn-purple-solid:hover {
+    background-color: #9D80C6 !important;
+    border-color: #B99AD9 !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 18px rgba(139, 111, 179, 0.45) !important;
+}
+
+.btn-stop-camera, .btn-outline-danger {
+    border: 1px solid rgba(184, 117, 123, 0.6) !important;
+    background-color: rgba(184, 117, 123, 0.15) !important;
+    color: #F3F0F5 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.btn-stop-camera:hover, .btn-outline-danger:hover {
+    background-color: rgba(184, 117, 123, 0.3) !important;
+    border-color: #B8757B !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+}
+
+
+
+/* ==========================================================================
+   LABFLOW LITE — SMART BOOKING HIGH-CONTRAST BUTTON & INTERACTION STYLES
+   ========================================================================== */
+
+.btn-booking-primary {
+    background-color: #8B6FB3 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #A68BC9 !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    padding: 0.75rem 1.75rem !important;
+    border-radius: 999px !important;
+    box-shadow: 0 3px 12px rgba(139, 111, 179, 0.35) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-booking-primary:hover {
+    background-color: #9D80C6 !important;
+    border-color: #B99AD9 !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 18px rgba(139, 111, 179, 0.45) !important;
+}
+
+.btn-booking-primary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 6px rgba(139, 111, 179, 0.25) !important;
+}
+
+.btn-booking-primary:disabled {
+    background-color: rgba(139, 111, 179, 0.4) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(139, 111, 179, 0.3) !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-use-slot {
+    background-color: rgba(139, 111, 179, 0.25) !important;
+    color: #F3F0F5 !important;
+    border: 1px solid #8B6FB3 !important;
+    font-weight: 700 !important;
+    font-size: 0.78rem !important;
+    padding: 0.45rem 1.15rem !important;
+    border-radius: 999px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-use-slot:hover {
+    background-color: #8B6FB3 !important;
+    color: #FFFFFF !important;
+    border-color: #B99AD9 !important;
+    box-shadow: 0 3px 12px rgba(139, 111, 179, 0.4) !important;
+    transform: translateY(-1px);
+}
+
+.btn-use-slot:active {
+    transform: translateY(0);
+}
+
+.btn-confirm-booking {
+    background-color: #8B6FB3 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #A68BC9 !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    padding: 0.75rem 1.75rem !important;
+    border-radius: 999px !important;
+    box-shadow: 0 3px 12px rgba(139, 111, 179, 0.35) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-confirm-booking:hover {
+    background-color: #9D80C6 !important;
+    border-color: #B99AD9 !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 18px rgba(139, 111, 179, 0.45) !important;
+}
+
+.btn-confirm-booking:active {
+    transform: translateY(0) !important;
+}
+
+.input-highlight-pulse {
+    border-color: var(--accent-light) !important;
+    box-shadow: 0 0 10px rgba(139, 111, 179, 0.4) !important;
+}
+
+
+/* Dedicated styling for Expected Student Strength Number Input */
+#booking-students {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    height: 44px !important;
+    padding: 0.6rem 0.85rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#booking-students:focus {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 3px rgba(139, 111, 179, 0.25) !important;
+    outline: none !important;
+}
+
+#booking-students::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7 !important;
+}
+
+
+/* ==========================================================================
+   FACULTY DASHBOARD PERSONAL WORKSPACE REDESIGN STYLES
+   ========================================================================== */
+
+.faculty-workspace-hero {
+    background: linear-gradient(135deg, #18161D 0%, #211E27 100%);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.session-card-horizontal {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.session-card-horizontal:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.quick-action-item {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.quick-action-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.btn-purple-solid {
+    background-color: var(--accent-primary);
+    color: #FFFFFF !important;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-purple-solid:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+    color: #FFFFFF !important;
+}
+
+.btn-outline-purple {
+    background-color: transparent;
+    color: var(--accent-light) !important;
+    border: 1px solid var(--accent-primary);
+    transition: all 0.2s ease;
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--accent-primary);
+    color: #FFFFFF !important;
+    border-color: var(--accent-primary);
+}
+
+.status-pill.status-completed {
+    background-color: var(--success-subtle);
+    color: var(--success);
+    border: 1px solid rgba(121, 168, 138, 0.3);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.status-pill.status-upcoming {
+    background-color: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.status-pill.status-insession {
+    background-color: var(--warning-subtle);
+    color: var(--warning);
+    border: 1px solid rgba(195, 154, 90, 0.3);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* ==========================================================================
+   FACULTY DASHBOARD VISUAL SYSTEM & TYPOGRAPHY HIERARCHY
+   ========================================================================== */
+
+/* Typography Rules */
+.page-greeting-heading {
+    font-size: 1.85rem; /* ~30-32px desktop */
+    font-weight: 650;
+    color: #FFFFFF;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+.section-heading {
+    font-size: 1.25rem; /* ~20-22px */
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: -0.015em;
+}
+
+.section-heading-sm {
+    font-size: 1.05rem; /* ~17px */
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+}
+
+.section-subtitle {
+    font-size: 0.84rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.card-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.session-card-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Overview Summary Cards (Equal height & consistent padding) */
+.overview-stat-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    height: 100%;
+}
+
+.overview-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.overview-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+}
+
+.overview-stat-value {
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0.25rem 0 0.25rem;
+}
+
+.overview-stat-subtext {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.overview-icon-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+}
+
+/* Content Panels */
+.content-panel {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Clean Horizontal Session Cards */
+.session-card-grid {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.session-card-grid:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Quick Actions Cards */
+.action-card-item {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.action-card-item:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.action-card-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.action-card-desc {
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.action-card-arrow {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.action-card-item:hover .action-card-arrow {
+    transform: translateX(3px);
+    color: var(--accent-light);
+}
+
+/* Activity Row Items */
+.activity-row-item {
+    transition: background-color 0.2s ease;
+}
+
+.activity-row-item:last-child {
+    border-bottom: none !important;
+}
+
+.activity-row-item:hover {
+    background-color: rgba(139, 111, 179, 0.06);
+}
+
+/* Buttons */
+.btn-outline-purple {
+    background-color: transparent;
+    color: var(--accent-light) !important;
+    border: 1px solid var(--accent-primary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-purple:hover {
+    background-color: var(--accent-primary);
+    color: #FFFFFF !important;
+    border-color: var(--accent-primary);
+}
+
+/* Status Badges */
+.status-pill.status-completed {
+    background-color: var(--success-subtle);
+    color: var(--success);
+    border: 1px solid rgba(121, 168, 138, 0.3);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.status-pill.status-upcoming {
+    background-color: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.status-pill.status-insession {
+    background-color: var(--warning-subtle);
+    color: var(--warning);
+    border: 1px solid rgba(195, 154, 90, 0.3);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* ==========================================================================
+   Official Sidebar Logo Branding + Subtle Animation
+   ========================================================================== */
+@keyframes logoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.sidebar-logo-img,
+.brand-logo-img,
+.brand-link img,
+.sidebar-brand-header img {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: inline-block;
+    animation: logoEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.brand-link:hover .sidebar-logo-img,
+.brand-link:hover .brand-logo-img,
+.brand-link:hover img,
+.sidebar-brand-header:hover .sidebar-logo-img {
+    transform: scale(1.04);
+}
+
+.brand-title, .brand-text {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.text-purple-highlight {
+    color: #B99AD9 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sidebar-logo-img {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* ==========================================================================
+   FACULTY LAB SCHEDULE - WEEKLY TIMETABLE STYLING (DARK PLUM CLEAN GRID)
+   ========================================================================== */
+
+.timetable-container-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.faculty-timetable-table {
+    width: 100% !important;
+    min-width: 980px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    table-layout: fixed !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    background-color: #18161D !important;
+    color: #F3F0F5 !important;
+    margin-bottom: 0 !important;
+    --bs-table-bg: transparent !important;
+    --bs-table-color: #F3F0F5 !important;
+    --bs-table-border-color: #38323F !important;
+    --bs-table-striped-bg: transparent !important;
+    --bs-table-active-bg: transparent !important;
+    --bs-table-hover-bg: transparent !important;
+}
+
+.faculty-timetable-table th,
+.faculty-timetable-table td {
+    background-color: #191720 !important;
+    color: #F3F0F5 !important;
+    border-color: #38323F !important;
+    padding: 0.85rem 0.65rem !important;
+    vertical-align: top !important;
+    box-sizing: border-box !important;
+}
+
+.faculty-timetable-table thead tr {
+    background-color: #15131A !important;
+}
+
+.faculty-timetable-table tbody tr {
+    background-color: #191720 !important;
+    min-height: 180px;
+}
+
+.time-col-header {
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    background-color: #15131A !important;
+    color: #B99AD9 !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    border-right: 1px solid #38323F !important;
+    padding: 1rem 0.6rem !important;
+}
+
+.time-col-cell {
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    background-color: #15131A !important;
+    color: #D8C7ED !important;
+    font-family: var(--font-mono) !important;
+    font-weight: 600 !important;
+    font-size: 0.76rem !important;
+    text-align: center !important;
+    border-right: 1px solid #38323F !important;
+    border-top: 1px solid #38323F !important;
+    vertical-align: middle !important;
+    padding: 1rem 0.6rem !important;
+}
+
+.time-slot-label {
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.day-col-header {
+    background-color: #191720 !important;
+    text-align: center !important;
+    border-right: 1px solid #38323F !important;
+    padding: 0.9rem 0.5rem !important;
+    vertical-align: middle !important;
+    transition: background-color 0.2s ease;
+    width: calc((100% - 150px) / 6);
+}
+
+.day-col-header:last-child {
+    border-right: none !important;
+}
+
+.day-code-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #B2AAB8;
+    letter-spacing: 0.06em;
+}
+
+.day-date-label {
+    font-size: 0.88rem;
+    color: #FFFFFF;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.today-header-highlight {
+    background-color: rgba(139, 111, 179, 0.22) !important;
+    border-top: 3px solid #B99AD9 !important;
+}
+
+.today-tag-pill {
+    display: inline-block;
+    background-color: var(--accent-primary);
+    color: #FFFFFF;
+    font-size: 0.62rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 999px;
+}
+
+.timetable-day-cell {
+    background-color: #191720 !important;
+    border-right: 1px solid #38323F !important;
+    border-top: 1px solid #38323F !important;
+    min-height: 175px;
+    height: 100%;
+    padding: 0.75rem 0.65rem !important;
+    width: calc((100% - 150px) / 6);
+}
+
+.timetable-day-cell:last-child {
+    border-right: none !important;
+}
+
+.today-cell-highlight {
+    background-color: rgba(139, 111, 179, 0.06) !important;
+}
+
+.empty-schedule-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 130px;
+}
+
+.empty-dash {
+    color: #4A4354;
+    font-size: 1.25rem;
+    font-family: var(--font-mono);
+}
+
+/* Faculty Schedule Session Card */
+.faculty-schedule-card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-left: 3px solid var(--accent-primary) !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 0.8rem !important;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+.faculty-schedule-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-hover) !important;
+    box-shadow: 0 4px 14px rgba(139, 111, 179, 0.25);
+    background-color: var(--bg-card-hover) !important;
+}
+
+.schedule-card-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+    margin-bottom: 0.35rem;
+}
+
+.schedule-card-lab {
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.25;
+    word-break: break-word;
+}
+
+.lab-code-pill {
+    background-color: rgba(139, 111, 179, 0.18);
+    border: 1px solid rgba(139, 111, 179, 0.35);
+    color: #B99AD9;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Schedule Controls & Buttons High-Contrast Styling */
+.btn-outline-custom {
+    background-color: #211E27 !important;
+    border: 1px solid #38323F !important;
+    color: #FFFFFF !important;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-custom:hover {
+    background-color: #292531 !important;
+    border-color: var(--accent-primary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-purple-subtle {
+    background-color: rgba(139, 111, 179, 0.22) !important;
+    border: 1px solid var(--accent-primary) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-purple-subtle:hover {
+    background-color: var(--accent-primary) !important;
+    border-color: var(--accent-hover) !important;
+    color: #FFFFFF !important;
+}
+
+.badge-purple-pill {
+    background-color: rgba(139, 111, 179, 0.18) !important;
+    border: 1px solid rgba(139, 111, 179, 0.35) !important;
+    color: #B99AD9 !important;
+}
+
+.filter-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #B99AD9;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.35rem;
+}
+
+.filter-select {
+    background-color: #19171F !important;
+    border: 1px solid #38323F !important;
+    color: #FFFFFF !important;
+    font-size: 0.84rem;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.filter-select:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 2px rgba(139, 111, 179, 0.25) !important;
+    color: #FFFFFF !important;
+}
+
+.filter-select option {
+    background-color: #211E27;
+    color: #FFFFFF;
+}
+
+/* Mobile Segmented Day Tab Selector */
+.mobile-day-selector-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.mobile-day-tab-btn {
+    flex: 1;
+    min-width: 52px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.mobile-day-tab-btn.active {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-hover);
+    color: #FFFFFF;
+}
+
+.mobile-day-tab-btn .day-tab-code {
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+.mobile-day-tab-btn .day-tab-date {
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.day-tab-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    margin-top: 2px;
+}
+
+
+/* ==========================================================================
+   FACULTY PROFILE STYLES
+   ========================================================================== */
+
+.faculty-large-avatar {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background-color: var(--accent-primary);
+    color: #FFFFFF;
+    font-size: 2rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--accent-hover);
+    box-shadow: 0 4px 16px rgba(139, 111, 179, 0.25);
+}
+
+.profile-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.profile-info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+}
+
+.profile-info-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.profile-info-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.profile-info-value {
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.profile-field-box {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.95rem;
+}
+
+.profile-field-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-bottom: 0.25rem;
+}
+
+.profile-field-val {
+    font-size: 0.88rem;
+    display: block;
+    word-break: break-word;
+}
+
+
+/* ==========================================================================
+   FACULTY NOTIFICATION BELL & DROPDOWN TOUCH / CLICK ACCESSIBILITY FIX
+   ========================================================================== */
+#faculty-notification-bell-wrapper {
+    position: relative !important;
+    z-index: 1060 !important;
+}
+
+#btn-faculty-notification-bell {
+    cursor: pointer !important;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+#faculty-notification-dropdown-panel {
+    display: none;
+    position: absolute !important;
+    right: 0 !important;
+    top: 48px !important;
+    width: 360px !important;
+    max-width: 90vw !important;
+    background-color: #211E27 !important;
+    border: 1px solid #38323F !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55) !important;
+    z-index: 99999 !important;
+}
+
+#faculty-notification-dropdown-panel.show,
+#faculty-notification-dropdown-panel.is-open,
+#faculty-notification-dropdown-panel:not(.d-none) {
+    display: block !important;
+}
+
+
+/* ==========================================================================
+   FACULTY DASHBOARD REFINED CARD GRID & ALIGNMENT ARCHITECTURE
+   ========================================================================== */
+
+/* Workspace Container */
+.workspace-body-container {
+    max-width: 1480px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.75rem 2rem;
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (max-width: 991.98px) {
+    .workspace-body-container {
+        padding: 1.25rem 1.25rem;
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .workspace-body-container {
+        padding: 1rem 0.85rem;
+        gap: 1rem;
+    }
+}
+
+/* 1. Overview Stat Grid: Desktop 4 cards, Tablet 2 cards, Mobile 1 card */
+.overview-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+}
+
+@media (max-width: 1199px) {
+    .overview-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .overview-stat-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+.overview-stat-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 132px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.overview-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.stat-card-header {
+    margin-bottom: 0.5rem;
+}
+
+.overview-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.overview-stat-value {
+    font-size: 1.95rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin: 0.2rem 0;
+}
+
+.overview-stat-subtext {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    margin-top: auto;
+}
+
+/* 2. Today's Sessions 2-Column Responsive Grid */
+.faculty-dash-sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
+    width: 100%;
+}
+
+@media (max-width: 991px) {
+    .faculty-dash-sessions-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .faculty-dash-sessions-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+.grid-col-full {
+    grid-column: 1 / -1;
+}
+
+.faculty-dash-session-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.faculty-dash-session-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 18px rgba(139, 111, 179, 0.18);
+}
+
+.session-card-header-bar {
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.session-card-title-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+    word-break: break-word;
+}
+
+.session-card-lab-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    word-break: break-word;
+}
+
+.session-card-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
+}
+
+.session-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    gap: 0.5rem;
+}
+
+.session-info-label {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+    flex-shrink: 0;
+}
+
+.session-info-val {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+    word-break: break-word;
+}
+
+.session-card-bottom-bar {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+/* 3. Quick Action Cards: Equal Height & Proper Positioning */
+.quick-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.action-card-item {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    min-height: 68px;
+    box-sizing: border-box;
+}
+
+.action-card-item:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.action-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.action-card-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+}
+
+.action-card-desc {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.action-card-arrow {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.action-card-item:hover .action-card-arrow {
+    transform: translateX(3px);
+    color: var(--accent-light);
+}
+
+
+/* ==========================================================================
+   FACULTY EQUIPMENT 3-COLUMN RESPONSIVE CARD GRID & ALIGNMENT STYLES
+   ========================================================================== */
+
+/* Equipment Health 4-Card Grid */
+.equipment-health-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+}
+
+@media (max-width: 1199px) {
+    .equipment-health-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .equipment-health-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+/* Equipment Asset 3-Column Grid */
+.faculty-equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .faculty-equipment-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .faculty-equipment-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+/* Individual Equipment Card */
+.faculty-equipment-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 380px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.faculty-equipment-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 20px rgba(139, 111, 179, 0.2);
+}
+
+.eq-card-faulty {
+    border-color: rgba(224, 108, 117, 0.4) !important;
+}
+
+.eq-card-top-bar {
+    margin-bottom: 0.75rem;
+}
+
+.eq-card-title-section {
+    margin-bottom: 0.9rem;
+}
+
+.eq-card-name {
+    font-size: 0.96rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #FFFFFF;
+    margin-bottom: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.7em;
+    word-break: break-word;
+}
+
+.eq-card-code {
+    letter-spacing: 0.04em;
+}
+
+.eq-card-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    margin-bottom: 0.85rem;
+}
+
+.eq-card-qr-box {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    margin-bottom: 0.85rem;
+}
+
+.eq-card-actions-bar {
+    margin-top: auto;
+    padding-top: 0.85rem;
+}
+
+.btn-eq-details {
+    background-color: rgba(139, 111, 179, 0.14);
+    border: 1px solid rgba(139, 111, 179, 0.35);
+    color: #F3F0F5;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.45rem 0.75rem;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-eq-details:hover {
+    background-color: #8B6FB3;
+    border-color: #B99AD9;
+    color: #FFFFFF;
+    box-shadow: 0 2px 10px rgba(139, 111, 179, 0.35);
+}
+
+.btn-eq-report-fault {
+    background-color: rgba(184, 117, 123, 0.12);
+    border: 1px solid rgba(184, 117, 123, 0.35);
+    color: #E06C75;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.45rem 0.75rem;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-eq-report-fault:hover {
+    background-color: rgba(184, 117, 123, 0.25);
+    border-color: #B8757B;
+    color: #FFFFFF;
+    box-shadow: 0 2px 10px rgba(184, 117, 123, 0.3);
+}
+
+/* ==========================================================================
+   FACULTY USAGE HISTORY & FAULT REPORTS 2-COLUMN RESPONSIVE CARD STYLING
+   ========================================================================== */
+
+/* 1. Grids: 2-Column Desktop, 1-Column Mobile */
+.faculty-usage-grid,
+.faculty-faults-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .faculty-usage-grid,
+    .faculty-faults-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+/* 2. Usage History Card */
+.faculty-usage-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--success);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 250px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.faculty-usage-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 18px rgba(139, 111, 179, 0.2);
+}
+
+.usage-card-name {
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #FFFFFF;
+    word-break: break-word;
+}
+
+.usage-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.95rem;
+}
+
+.usage-meta-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-bottom: 0.25rem;
+}
+
+.usage-meta-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.usage-timing-box {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.95rem;
+}
+
+.usage-timing-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+/* 3. Fault Reports Card */
+.faculty-fault-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 250px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.faculty-fault-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+    background-color: var(--bg-card-hover);
+    box-shadow: 0 6px 18px rgba(139, 111, 179, 0.2);
+}
+
+.fault-card-active {
+    border-left: 3px solid #E06C75 !important;
+}
+
+.fault-card-name {
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #FFFFFF;
+    word-break: break-word;
+}
+
+.fault-description-box {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.95rem;
+}
+
+.fault-desc-text {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: #FFFFFF;
+    font-style: italic;
+    word-break: break-word;
+}
+
+/* 4. Badges and Status Pills */
+.status-pill.status-faulty {
+    background-color: rgba(224, 108, 117, 0.15);
+    border: 1px solid rgba(224, 108, 117, 0.35);
+    color: #E06C75;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-rose-subtle {
+    background-color: rgba(224, 108, 117, 0.16) !important;
+    border: 1px solid rgba(224, 108, 117, 0.35) !important;
+    color: #E06C75 !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-rose-subtle:hover {
+    background-color: #E06C75 !important;
+    border-color: #E06C75 !important;
+    color: #FFFFFF !important;
+}
+
+.badge-rose {
+    background-color: rgba(224, 108, 117, 0.15);
+    border: 1px solid rgba(224, 108, 117, 0.35);
+    color: #E06C75;
+}
+
+.badge-amber {
+    background-color: rgba(229, 192, 123, 0.15);
+    border: 1px solid rgba(229, 192, 123, 0.35);
+    color: #E5C07B;
+}
+
+.badge-cyan {
+    background-color: rgba(97, 175, 239, 0.15);
+    border: 1px solid rgba(97, 175, 239, 0.35);
+    color: #61AFEF;
+}
+
+.badge-emerald {
+    background-color: rgba(121, 168, 138, 0.15);
+    border: 1px solid rgba(121, 168, 138, 0.35);
+    color: #79A88A;
+}
+
+.text-rose { color: #E06C75 !important; }
+.text-amber { color: #E5C07B !important; }
+.text-emerald { color: #79A88A !important; }
+
+
+/* ==========================================================================
+   FACULTY DISRUPTION PREDICTION STYLES
+   ========================================================================== */
+.factor-item-row {
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.factor-item-row:hover {
+    border-color: var(--accent-primary) !important;
+    background-color: var(--bg-card-hover) !important;
+}
+
+.affected-item-card, .alternate-item-card {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.affected-item-card:hover {
+    border-color: rgba(224, 108, 117, 0.4) !important;
+}
+
+.alternate-item-card:hover {
+    border-color: var(--accent-primary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

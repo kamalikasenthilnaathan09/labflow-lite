@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Workspace — LabFlow Lite</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Dedicated Student Dashboard Stylesheet -->
+    <link rel="stylesheet" href="/css/student.css">
+    <!-- HTML5 QR Code Scanning Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body class="student-body">
+
+    <!-- Mobile Sidebar Overlay -->
+    <div id="sidebar-overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-none z-1030"></div>
+
+    <!-- 1. PERSISTENT SIDEBAR -->
+    <aside class="student-sidebar" id="student-sidebar">
+        <div>
+            <!-- Sidebar Header / Branding -->
+            <div class="sidebar-header d-flex align-items-center justify-content-between">
+                <a href="/dashboard/student" data-route="/dashboard/student" class="sidebar-brand-link d-flex align-items-center gap-2.5 text-decoration-none">
+                    <img src="/assets/images/logo.png" alt="LabFlow Lite Logo" class="sidebar-logo-img">
+                    <div>
+                        <div class="brand-text text-white fw-bold tracking-tight">LabFlow <span class="text-purple-highlight">Lite</span></div>
+                        <div class="text-slate-400 extra-small font-monospace" style="font-size:0.65rem; letter-spacing:0.06em;">STUDENT WORKSPACE</div>
+                    </div>
+                </a>
+                <button class="btn btn-sm btn-link text-slate-400 d-lg-none" id="sidebar-close-btn" aria-label="Close sidebar">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <!-- Sidebar Navigation Menu -->
+            <nav class="sidebar-menu">
+                <div class="menu-category">Workspace</div>
+                <a href="/dashboard/student" data-route="/dashboard/student" class="sidebar-link active">
+                    <i class="bi bi-grid-1x2-fill"></i> Dashboard
+                </a>
+
+                <div class="menu-category">Laboratory</div>
+                <a href="/student/labs" data-route="/student/labs" class="sidebar-link">
+                    <i class="bi bi-building"></i> Our Labs
+                </a>
+                <a href="/student/equipment" data-route="/student/equipment" class="sidebar-link">
+                    <i class="bi bi-hdd-stack"></i> Equipment
+                </a>
+                <a href="/student/bookings" data-route="/student/bookings" class="sidebar-link">
+                    <i class="bi bi-hdd-network"></i> My Equipment
+                </a>
+                <a href="/student/schedule" data-route="/student/schedule" class="sidebar-link">
+                    <i class="bi bi-clock-history"></i> Lab Schedule
+                </a>
+
+                <div class="menu-category">Activity</div>
+                <a href="/student/usage" data-route="/student/usage" class="sidebar-link">
+                    <i class="bi bi-graph-up-arrow"></i> Usage History
+                </a>
+                <a href="/student/fault-reports" data-route="/student/fault-reports" class="sidebar-link">
+                    <i class="bi bi-tools"></i> My Fault Reports
+                </a>
+
+                <div class="menu-category">Account</div>
+                <a href="/student/profile" data-route="/student/profile" class="sidebar-link">
+                    <i class="bi bi-person"></i> My Profile
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer / Logout -->
+        <div class="sidebar-footer">
+            <button type="button" class="btn-sidebar-logout" onclick="openLogoutConfirmation()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. PERSISTENT TOP BAR & MAIN CONTENT -->
+    <main class="student-main-content">
+        <!-- Top Navigation Bar -->
+        <header class="top-nav-bar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-dark-card border-slate-700 text-slate-300 d-lg-none" id="sidebar-toggle-btn" aria-label="Toggle sidebar">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                <div>
+                    <span class="badge bg-cyan-subtle text-cyan border border-cyan-subtle rounded-pill extra-small px-3 py-1 mb-1">
+                        COLLEGE LABORATORY PORTAL
+                    </span>
+                    <h4 class="text-white fw-bold mb-0">Student Workspace</h4>
+                </div>
+            </div>
+
+            <!-- Student Profile & Notification Bell Header Container -->
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-none d-sm-block text-end">
+                    <div class="text-white fw-bold small student-name-display">Loading...</div>
+                    <div class="text-slate-300 extra-small font-monospace"><span class="student-id-display">--</span> | <span class="student-dept-display">--</span></div>
+                </div>
+
+                <!-- NOTIFICATION BELL DROPDOWN WRAPPER -->
+                <div class="position-relative" id="notification-bell-wrapper">
+                    <button type="button" class="btn btn-dark-card border-slate-700 text-slate-200 position-relative p-0 rounded-circle d-flex align-items-center justify-content-center" id="btn-notification-bell" onclick="toggleNotificationDropdown(event)" aria-label="Notifications" style="width: 40px; height: 40px; background-color: #211E27; border: 1px solid #38323F;">
+                        <i class="bi bi-bell fs-5" style="color: #F3F0F5;"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill d-none" id="notification-unread-badge" style="background-color: #8B6FB3; color: #FFFFFF; font-size: 10px; padding: 3px 6px; border: 2px solid #111014;">
+                            0
+                        </span>
+                    </button>
+
+                    <!-- DROPDOWN PANEL OVERLAY -->
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow-lg d-none" id="notification-dropdown-panel" style="width: 350px; max-width: 90vw; background-color: #211E27; border: 1px solid #38323F; border-radius: 12px; position: absolute; right: 0; top: 48px; z-index: 1050; font-family: var(--font-main);">
+                        <div class="d-flex align-items-center justify-content-between p-3" style="border-bottom: 1px solid #38323F; background-color: #19171F; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-bell-fill" style="color: #8B6FB3;"></i>
+                                <span class="fw-bold text-white fs-6">Notifications</span>
+                                <span class="badge px-2 py-0.5 rounded-pill font-monospace extra-small" id="dropdown-unread-count" style="background-color: rgba(139, 111, 179, 0.2); color: #B99AD9;">0 unread</span>
+                            </div>
+                            <button type="button" class="btn btn-link text-decoration-none p-0 extra-small fw-semibold" onclick="markAllNotificationsAsRead()" style="color: #B99AD9;">
+                                Mark all as read
+                            </button>
+                        </div>
+                        <div id="notification-dropdown-list" style="max-height: 340px; overflow-y: auto;">
+                            <!-- Dynamically populated notifications -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="brand-logo-badge text-white fw-bold rounded-circle d-flex align-items-center justify-content-center cursor-pointer" onclick="navigateTo('/student/profile')" style="width:40px; height:40px; background-color: #8B6FB3 !important;">
+                    <i class="bi bi-person-fill fs-5"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===================================================================
+             VIEW 1: STUDENT DASHBOARD (/dashboard/student)
+             =================================================================== -->
+        <div class="student-view-panel" id="view-dashboard">
+            <!-- Welcome Banner -->
+            <div class="card-dash p-4 mb-4 border-cyan-subtle bg-gradient-cta">
+                <div class="row align-items-center gy-3">
+                    <div class="col-lg-7">
+                        <h3 class="text-white fw-extrabold mb-1">Good afternoon, <span class="student-name-display text-cyan-light">Student</span> 👋</h3>
+                        <p class="text-slate-300 fs-6 mb-0">Your college laboratory activity at a glance.</p>
+                    </div>
+                    <div class="col-lg-5 text-lg-end">
+                        <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                            <button class="btn btn-cyan rounded-pill btn-sm px-3.5 py-2 fw-bold" onclick="navigateTo('/student/equipment')">
+                                <i class="bi bi-plus-circle me-1.5"></i> Book Equipment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Statistics -->
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-lg-3">
+                    <div class="metric-card cursor-pointer" onclick="navigateTo('/student/bookings')">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="metric-icon"><i class="bi bi-calendar-check"></i></div>
+                            <span class="text-slate-300 extra-small font-monospace fw-bold">ACTIVE</span>
+                        </div>
+                        <div class="h3 text-white fw-bold mb-0" id="stat-active-bookings">0</div>
+                        <div class="text-slate-300 extra-small mt-1">Active Bookings</div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="metric-card cursor-pointer" onclick="navigateTo('/student/schedule')">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="metric-icon metric-icon-amber"><i class="bi bi-clock-history"></i></div>
+                            <span class="text-slate-300 extra-small font-monospace fw-bold">SCHEDULED</span>
+                        </div>
+                        <div class="h3 text-white fw-bold mb-0" id="stat-upcoming-sessions">0</div>
+                        <div class="text-slate-300 extra-small mt-1">Upcoming Lab Sessions</div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="metric-card cursor-pointer" onclick="navigateTo('/student/usage')">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="metric-icon"><i class="bi bi-hdd-stack"></i></div>
+                            <span class="text-slate-300 extra-small font-monospace fw-bold">CHECKOUTS</span>
+                        </div>
+                        <div class="h3 text-white fw-bold mb-0" id="stat-equipment-used">0</div>
+                        <div class="text-slate-300 extra-small mt-1">Equipment Used</div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="metric-card cursor-pointer" onclick="navigateTo('/student/fault-reports')">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="metric-icon metric-icon-rose"><i class="bi bi-tools"></i></div>
+                            <span class="text-slate-300 extra-small font-monospace fw-bold">TICKETS</span>
+                        </div>
+                        <div class="h3 text-white fw-bold mb-0" id="stat-open-faults">0</div>
+                        <div class="text-slate-300 extra-small mt-1">Open Fault Reports</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Bookings Summary & Quick Laboratory Actions -->
+            <div class="row g-3">
+                <div class="col-lg-7">
+                    <div class="card-dash h-100">
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-slate-800">
+                            <div>
+                                <h6 class="text-white fw-bold mb-0">Upcoming Bookings Summary</h6>
+                                <div class="text-slate-300 extra-small">Your next scheduled equipment checkouts</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-cyan rounded-pill extra-small px-3 fw-semibold" onclick="navigateTo('/student/bookings')">
+                                View All Bookings <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                        <div id="dash-recent-bookings-summary" class="d-flex flex-column gap-2">
+                            <!-- Dynamic summary list -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card-dash h-100">
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-slate-800">
+                            <div>
+                                <h6 class="text-white fw-bold mb-0">Quick Laboratory Actions</h6>
+                                <div class="text-slate-300 extra-small">Access main student modules</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-2.5">
+                            <a href="/student/labs" data-route="/student/labs" class="quick-action-card">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="action-icon">
+                                        <i class="bi bi-building"></i>
+                                    </div>
+                                    <div>
+                                        <div class="action-title">Browse College Labs</div>
+                                        <div class="action-desc">View campus teaching laboratories</div>
+                                    </div>
+                                </div>
+                                <i class="bi bi-arrow-right action-arrow"></i>
+                            </a>
+
+                            <a href="/student/equipment" data-route="/student/equipment" class="quick-action-card">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="action-icon">
+                                        <i class="bi bi-hdd-stack"></i>
+                                    </div>
+                                    <div>
+                                        <div class="action-title">Equipment Inventory</div>
+                                        <div class="action-desc">Search &amp; reserve apparatus</div>
+                                    </div>
+                                </div>
+                                <i class="bi bi-arrow-right action-arrow"></i>
+                            </a>
+
+                            <a href="/student/bookings" data-route="/student/bookings" class="quick-action-card">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="action-icon">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                    <div>
+                                        <div class="action-title">My Bookings</div>
+                                        <div class="action-desc">Check active &amp; upcoming checkouts</div>
+                                    </div>
+                                </div>
+                                <i class="bi bi-arrow-right action-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 2: OUR COLLEGE LABORATORIES (/student/labs)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-labs">
+            <!-- Header -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-slate-800">
+                <div>
+                    <h3 class="text-white fw-bold mb-1">Our College Laboratories</h3>
+                    <p class="text-slate-300 fs-6 mb-0">Explore teaching laboratories available on campus.</p>
+                </div>
+                <span class="badge bg-cyan-subtle text-cyan-light px-3.5 py-2 rounded-pill font-monospace fw-bold" id="labs-count-badge">
+                    Calculating Laboratories...
+                </span>
+            </div>
+
+            <!-- Search Bar & Department Filter Controls -->
+            <div class="card-dash p-3 mb-4">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-7 col-lg-8">
+                        <div class="lab-search-wrapper position-relative w-100">
+                            <span class="lab-search-icon position-absolute top-50 start-0 translate-middle-y ms-3 text-slate-400 d-flex align-items-center">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-sm bg-slate-950 border-slate-800 text-white ps-5 pe-5 py-2 lab-search-input" 
+                                id="labs-search-input" 
+                                placeholder="Search laboratories..."
+                                autocomplete="off"
+                            />
+                            <button 
+                                type="button" 
+                                class="btn btn-sm text-slate-400 position-absolute top-50 end-0 translate-middle-y me-2.5 p-0 border-0 d-none" 
+                                id="labs-search-clear-btn" 
+                                aria-label="Clear search"
+                            >
+                                <i class="bi bi-x-circle-fill fs-6"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4">
+                        <select class="form-select form-select-sm department-filter border-slate-800 text-white py-2" id="labs-dept-select" onchange="loadCollegeLabs()">
+                            <option value="">All Departments</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Labs Grid Container -->
+            <div class="row g-3" id="college-labs-grid">
+                <!-- Dynamically loaded college lab cards -->
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 2B: LAB DETAILS VIEW (/student/labs/<lab_id>)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-lab-details">
+            <div id="view-lab-details-container">
+                <!-- Dynamically loaded lab details -->
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 3: LABORATORY EQUIPMENT (/student/equipment)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-equipment">
+            <!-- Page Header -->
+            <div class="mb-4">
+                <div class="text-uppercase extra-small font-monospace fw-bold mb-1" style="color: #8B6FB3 !important; letter-spacing: 0.1em; font-size: 0.72rem;">
+                    LABORATORY
+                </div>
+                <h3 class="text-white fw-bold mb-1" style="font-weight: 700; font-size: 1.65rem;">Laboratory Equipment</h3>
+                <p class="small mb-0" style="color: #817986 !important; font-size: 0.88rem;">
+                    Browse, search, and reserve college laboratory apparatus.
+                </p>
+            </div>
+
+            <!-- Unified Equipment Table Container Card -->
+            <div class="card-dash p-0 overflow-hidden" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <!-- Toolbar Header -->
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 p-3.5 p-md-4" style="border-bottom: 1px solid #38323F; background-color: #19171F;">
+                    <!-- LEFT: Equipment Count / Contextual Label -->
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="font-monospace extra-small fw-bold text-uppercase" id="eq-count-label" style="color: #817986 !important; letter-spacing: 0.08em;">
+                            8 EQUIPMENT ITEMS
+                        </span>
+                    </div>
+
+                    <!-- RIGHT: Controls Toolbar -->
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <div class="input-group input-group-sm" style="max-width: 220px;">
+                            <span class="input-group-text border-0" style="background-color: #19171F; color: #817986; border: 1px solid #38323F !important; border-right: none !important;">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-sm text-white" 
+                                id="eq-search-input" 
+                                placeholder="Search equipment..." 
+                                style="background-color: #19171F !important; color: #F3F0F5 !important; border: 1px solid #38323F !important; border-left: none !important;" 
+                                onkeyup="loadEquipment(document.getElementById('eq-lab-select').value, this.value, '')"
+                            />
+                        </div>
+
+                        <select 
+                            class="form-select form-select-sm text-white" 
+                            id="eq-lab-select" 
+                            onchange="loadEquipment(this.value, document.getElementById('eq-search-input').value, '')" 
+                            style="max-width: 200px; background-color: #19171F !important; color: #F3F0F5 !important; border: 1px solid #38323F !important; cursor: pointer;"
+                        >
+                            <option value="">All Laboratories</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div id="equipment-table-container">
+                    <!-- Dynamically loaded equipment table -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 4: SCAN EQUIPMENT QR (/student/scan-qr)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-scan-qr">
+            <div class="mb-4">
+                <h3 class="text-white fw-bold mb-1">Scan Equipment QR</h3>
+                <p class="text-slate-300 fs-6">Scan the QR code attached to college laboratory equipment to instantly view equipment information and availability.</p>
+            </div>
+
+            <div class="card-dash max-w-700 mx-auto p-4 p-md-4">
+                <div class="text-center mb-4">
+                    <div class="brand-logo-badge bg-cyan-subtle text-cyan mx-auto mb-3" style="width:56px; height:56px; border-radius:14px;">
+                        <i class="bi bi-qr-code-scan fs-3"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-2">QR Code Equipment Scanner</h5>
+                    <p class="text-slate-300 extra-small max-w-700 mx-auto mb-0">
+                        Position your camera over the apparatus QR tag code, or enter the tag ID manually below to view real-time status.
+                    </p>
+                </div>
+
+                <!-- Camera / QR Scanning Area Card -->
+                <div class="qr-scanner-card p-3 p-sm-4 rounded-3 text-center mb-4">
+                    <!-- Default Placeholder before scanning -->
+                    <div id="qr-camera-placeholder" class="py-3">
+                        <div class="qr-placeholder-icon-box mx-auto mb-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-camera fs-2 text-cyan"></i>
+                        </div>
+                        <h6 class="text-white fw-bold mb-1">Scan Equipment QR</h6>
+                        <p class="text-slate-300 extra-small max-w-400 mx-auto mb-0">
+                            Allow camera access and position the QR code inside the frame.
+                        </p>
+                    </div>
+
+                    <!-- Live Camera Feed Box with Square Scanning Frame -->
+                    <div id="qr-reader-wrapper" class="d-none my-3 position-relative mx-auto" style="max-width: 380px;">
+                        <div id="qr-reader" class="overflow-hidden rounded-3 border border-slate-700"></div>
+                    </div>
+
+                    <!-- Scanner Controls -->
+                    <div class="d-flex justify-content-center gap-2 mt-3">
+                        <button type="button" class="btn btn-cyan rounded-pill px-4 py-2 fw-bold" id="btn-start-scanner">
+                            <i class="bi bi-camera-video me-1.5"></i> Start Scanner
+                        </button>
+                        <button type="button" class="btn btn-outline-danger text-rose border-rose rounded-pill px-4 py-2 fw-bold d-none" id="btn-stop-scanner">
+                            <i class="bi bi-stop-circle me-1.5"></i> Stop Scanner
+                        </button>
+                    </div>
+
+                    <!-- Camera Status / Error Alerts -->
+                    <div id="scanner-status-alert" class="alert extra-small mt-3 mb-0 d-none text-start"></div>
+                </div>
+
+                <!-- OR Separator -->
+                <div class="position-relative text-center my-4">
+                    <hr class="border-slate-800 my-0">
+                    <span class="position-absolute top-50 start-50 translate-middle px-3 bg-card text-slate-300 font-monospace extra-small fw-bold">OR</span>
+                </div>
+
+                <!-- Manual Equipment Tag ID Lookup -->
+                <div class="manual-tag-lookup-section text-start">
+                    <label for="page-qr-input" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase mb-2">
+                        <i class="bi bi-tag me-1 text-cyan"></i> Equipment Tag ID
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-slate-950 border-slate-800 text-slate-300"><i class="bi bi-qr-code"></i></span>
+                        <input type="text" class="form-control bg-slate-950 border-slate-800 text-white font-monospace" id="page-qr-input" placeholder="e.g. LAB-AI-001" autocomplete="off">
+                        <button type="button" class="btn btn-cyan px-4 fw-bold" id="page-qr-btn">Look Up Equipment</button>
+                    </div>
+                </div>
+
+                <!-- Equipment Result Card / Error Display -->
+                <div id="page-qr-result" class="mt-4"></div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 5: MY EQUIPMENT (/student/bookings)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-bookings">
+            <!-- Page Header -->
+            <div class="mb-4">
+                <div class="text-uppercase extra-small font-monospace fw-bold mb-1" style="color: #8B6FB3 !important; letter-spacing: 0.1em; font-size: 0.72rem;">
+                    LABORATORY ALLOCATION
+                </div>
+                <h3 class="text-white fw-bold mb-1" style="font-weight: 700; font-size: 1.65rem;">My Equipment</h3>
+                <p class="small mb-0" style="color: #817986 !important; font-size: 0.88rem;">
+                    View equipment assigned to your practical sessions and your current equipment usage.
+                </p>
+            </div>
+
+            <div class="card-dash p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="d-flex align-items-center justify-content-between mb-4 pb-3" style="border-bottom: 1px solid #38323F;">
+                    <div>
+                        <h5 class="text-white fw-bold mb-0.5" style="font-weight: 600; color: #F3F0F5;">Assigned Practical Apparatus</h5>
+                        <div class="extra-small text-slate-400">Equipment allocated for your practical coursework</div>
+                    </div>
+                    <span class="badge px-3 py-1.5 rounded-pill font-mono extra-small fw-semibold" id="bookings-count-badge" style="background-color: rgba(139, 111, 179, 0.15); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.3);">
+                        ALLOCATIONS
+                    </span>
+                </div>
+
+                <div id="bookings-cards-container">
+                    <!-- Dynamically loaded clean equipment allocation cards -->
+                </div>
+            </div>
+        </div>
+
+                        <!-- ===================================================================
+             VIEW 6: LAB SCHEDULE (/student/schedule) - REDESIGNED COLLEGE TIMETABLE
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-schedule">
+            <!-- 1. Page Header & Academic Context Bar -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+                <div>
+                    <div class="text-uppercase extra-small font-monospace fw-bold mb-1 text-purple-highlight" style="letter-spacing: 0.1em; font-size: 0.72rem;">
+                        ACADEMIC TIMETABLE
+                    </div>
+                    <h3 class="text-white fw-bold mb-1" style="font-weight: 700; font-size: 1.65rem;">Practical Laboratory Schedule</h3>
+                    <p class="small mb-0 text-slate-400" style="font-size: 0.88rem;">
+                        Practical lab session timetable for your department and section.
+                    </p>
+                </div>
+                <!-- Dynamic Academic Context Box -->
+                <div class="p-3 rounded-3 academic-context-badge-box" style="background-color: #211E27; border: 1px solid #38323F; min-width: 250px;">
+                    <div class="extra-small font-monospace fw-bold text-uppercase" id="sched-dept-name" style="color: #F3F0F5; letter-spacing: 0.05em;">
+                        INFORMATION TECHNOLOGY
+                    </div>
+                    <div class="extra-small font-mono fw-semibold mt-1" id="sched-academic-meta" style="color: #B99AD9;">
+                        III YEAR • V SEMESTER • SECTION B
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Week Navigation Bar -->
+            <div class="card-dash p-3 mb-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-dark-card border-slate-700 text-slate-300 rounded-pill px-3 py-1.5 extra-small" onclick="navigateScheduleWeek(-1)">
+                            <i class="bi bi-chevron-left me-1"></i> Previous Week
+                        </button>
+                        <span class="px-3 py-1.5 rounded-pill font-mono extra-small fw-bold text-white" id="sched-week-label" style="background-color: #19171F; border: 1px solid #38323F;">
+                            31 Aug – 06 Sep 2026
+                        </span>
+                        <button type="button" class="btn btn-sm btn-dark-card border-slate-700 text-slate-300 rounded-pill px-3 py-1.5 extra-small" onclick="navigateScheduleWeek(1)">
+                            Next Week <i class="bi bi-chevron-right ms-1"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-purple rounded-pill px-3.5 py-1.5 extra-small fw-semibold" id="sched-btn-this-week" onclick="navigateScheduleWeek(0)">
+                            <i class="bi bi-calendar-event me-1"></i> This Week
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. This Week Summary Metric Bar -->
+            <div class="mb-4">
+                <div class="text-uppercase extra-small font-monospace fw-bold mb-2 text-slate-400" style="letter-spacing: 0.08em;">
+                    THIS WEEK SUMMARY
+                </div>
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 rounded-3 h-100 d-flex align-items-center justify-content-between" style="background-color: #211E27; border: 1px solid #38323F;">
+                            <div>
+                                <div class="extra-small text-slate-400 font-monospace text-uppercase mb-1">PRACTICAL SESSIONS</div>
+                                <div class="h4 text-white fw-bold mb-0" id="summary-sessions-count">0</div>
+                            </div>
+                            <div class="metric-icon" style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(139, 111, 179, 0.15); color: #B99AD9; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-calendar2-check fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 rounded-3 h-100 d-flex align-items-center justify-content-between" style="background-color: #211E27; border: 1px solid #38323F;">
+                            <div>
+                                <div class="extra-small text-slate-400 font-monospace text-uppercase mb-1">LABORATORIES</div>
+                                <div class="h4 text-white fw-bold mb-0" id="summary-labs-count">0</div>
+                            </div>
+                            <div class="metric-icon" style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(185, 154, 217, 0.12); color: #F3F0F5; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-building fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 rounded-3 h-100 d-flex align-items-center justify-content-between" style="background-color: #211E27; border: 1px solid #38323F;">
+                            <div class="pe-2 text-truncate">
+                                <div class="extra-small text-slate-400 font-monospace text-uppercase mb-1">NEXT PRACTICAL</div>
+                                <div class="fw-bold text-white text-truncate" id="summary-next-subject" style="font-size: 0.92rem;">--</div>
+                                <div class="extra-small text-purple-highlight font-mono text-truncate" id="summary-next-meta">--</div>
+                            </div>
+                            <div class="metric-icon flex-shrink-0" style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(121, 168, 138, 0.15); color: #79A88A; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-clock-history fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Timetable Container (Filters + Weekly Grid) -->
+            <div class="card-dash p-4 mb-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3" style="border-bottom: 1px solid #38323F;">
+                    <div>
+                        <h5 class="text-white fw-bold mb-0.5" style="font-weight: 600; color: #F3F0F5;">Weekly Laboratory Timetable</h5>
+                        <div class="extra-small text-slate-400">Click any session block to view lab details and equipment</div>
+                    </div>
+                    <!-- Lightweight Filter Controls -->
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-purple active sched-filter-btn" data-filter="all" onclick="filterStudentSchedule('all')">All</button>
+                            <button type="button" class="btn btn-outline-purple sched-filter-btn" data-filter="today" onclick="filterStudentSchedule('today')">Today</button>
+                            <button type="button" class="btn btn-outline-purple sched-filter-btn" data-filter="upcoming" onclick="filterStudentSchedule('upcoming')">Upcoming</button>
+                        </div>
+                        <select class="form-select form-select-sm bg-dark text-slate-300 border-slate-700 rounded-pill py-1 px-3 extra-small" id="sched-filter-subject" style="max-width: 170px;" onchange="applyScheduleDropdownFilters()">
+                            <option value="">All Subjects</option>
+                        </select>
+                        <select class="form-select form-select-sm bg-dark text-slate-300 border-slate-700 rounded-pill py-1 px-3 extra-small" id="sched-filter-lab" style="max-width: 170px;" onchange="applyScheduleDropdownFilters()">
+                            <option value="">All Laboratories</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Desktop / Tablet Weekly Timetable Table Grid -->
+                <div class="timetable-responsive-container d-none d-md-block" id="timetable-desktop-view">
+                    <table class="weekly-timetable-table">
+                        <thead>
+                            <tr>
+                                <th class="col-time">TIME</th>
+                                <th id="th-day-mon" class="day-col-header">MON</th>
+                                <th id="th-day-tue" class="day-col-header">TUE</th>
+                                <th id="th-day-wed" class="day-col-header">WED</th>
+                                <th id="th-day-thu" class="day-col-header">THU</th>
+                                <th id="th-day-fri" class="day-col-header">FRI</th>
+                                <th id="th-day-sat" class="day-col-header">SAT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetable-grid-body">
+                            <!-- Dynamically loaded rows from student.js -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Responsive Day-by-Day View -->
+                <div class="d-md-none" id="timetable-mobile-view">
+                    <!-- Dynamically loaded day-grouped accordion cards -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="timetable-empty-state" class="d-none text-center py-5 px-3 rounded-3 mt-3" style="background-color: #19171F; border: 1px dashed #38323F;">
+                    <div class="brand-logo-badge bg-purple-subtle text-purple mx-auto mb-3" style="width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="bi bi-calendar-x"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1" style="font-size: 1.1rem;">
+                        No practical sessions scheduled for this week.
+                    </h5>
+                    <p class="text-slate-400 extra-small mb-0" style="max-width: 420px; margin: 0 auto; line-height: 1.5;">
+                        Your timetable will appear here when practical sessions are assigned by the faculty.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. Today's Practicals Section -->
+            <div class="card-dash p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="d-flex align-items-center justify-content-between mb-3 pb-3" style="border-bottom: 1px solid #38323F;">
+                    <div>
+                        <h5 class="text-white fw-bold mb-0.5" style="font-weight: 600; color: #F3F0F5;">Today's Practicals</h5>
+                        <div class="extra-small text-slate-400" id="today-practicals-subtitle">Scheduled sessions for today</div>
+                    </div>
+                    <span class="badge px-3 py-1.5 rounded-pill font-mono extra-small fw-bold" id="today-count-badge" style="background-color: rgba(139, 111, 179, 0.15); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.3);">
+                        0 SESSIONS
+                    </span>
+                </div>
+
+                <div id="today-practicals-list" class="d-flex flex-column gap-3">
+                    <!-- Dynamically populated from student.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 7: USAGE HISTORY (/student/usage)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-usage">
+            <div class="card-dash">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-slate-800">
+                    <div>
+                        <h3 class="text-white fw-bold mb-1">My Equipment Usage</h3>
+                        <p class="text-slate-300 fs-6 mb-0">Historical apparatus checkout log and usage duration.</p>
+                    </div>
+                    <span class="badge bg-purple-subtle text-purple font-mono px-3 py-1.5 rounded-pill extra-small fw-bold" id="usage-records-count-badge">
+                        2 USAGE RECORDS
+                    </span>
+                </div>
+
+                <div id="usage-table-container">
+                    <!-- Dynamically loaded usage table -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 8: MY FAULT REPORTS (/student/fault-reports)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-fault-reports">
+            <div class="card-dash">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom border-slate-800">
+                    <div>
+                        <h3 class="text-white fw-bold mb-1">My Equipment Fault Reports</h3>
+                        <p class="text-slate-300 fs-6 mb-0">Track hardware issues reported by you for technician maintenance.</p>
+                    </div>
+                    <button class="btn btn-outline-danger text-rose border-rose rounded-pill px-4" onclick="navigateTo('/student/equipment')">
+                        <i class="bi bi-tools me-1"></i> Report Equipment Fault
+                    </button>
+                </div>
+
+                <div id="faults-table-container">
+                    <!-- Dynamically loaded fault reports -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 9: MY PROFILE (/student/profile)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-profile">
+            <!-- Page Header -->
+            <div class="mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div>
+                    <div class="text-uppercase extra-small font-monospace fw-bold mb-1" style="color: #8B6FB3 !important; letter-spacing: 0.1em; font-size: 0.72rem;">
+                        ACCOUNT MANAGEMENT
+                    </div>
+                    <h3 class="text-white fw-bold mb-1" style="font-weight: 700; font-size: 1.65rem;">My Profile</h3>
+                    <p class="small mb-0" style="color: #817986 !important; font-size: 0.88rem;">
+                        Manage your student credentials, academic details, and personal contact information.
+                    </p>
+                </div>
+                <!-- Profile Action Header Controls -->
+                <div id="profile-action-controls">
+                    <button type="button" class="btn btn-cyan rounded-pill px-4 py-2 fw-bold extra-small" id="btn-edit-profile" onclick="toggleProfileEditMode(true)">
+                        <i class="bi bi-pencil-square me-1.5"></i>Edit Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile Alert Message -->
+            <div id="profile-status-alert" class="alert extra-small mb-4 d-none"></div>
+
+            <!-- VIEW MODE & EDIT MODE CONTAINER -->
+            <div class="row g-4">
+                <!-- LEFT COLUMN: Profile Summary & Avatar Card -->
+                <div class="col-12 col-lg-4">
+                    <div class="card-dash p-4 text-center h-100" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                        <div class="brand-logo-badge bg-cyan text-white fw-bold rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center shadow-sm" style="width:80px; height:80px; font-size: 2.2rem; background-color: #8B6FB3 !important;">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <h4 class="text-white fw-bold mb-1 student-name-display" id="profile-card-name">Student Name</h4>
+                        <div class="text-slate-400 extra-small font-monospace mb-3 student-id-display" id="profile-card-id" style="color: #B99AD9 !important;">
+                            STU-2026-089
+                        </div>
+
+                        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                            <span class="badge px-3 py-1 rounded-pill extra-small fw-semibold" style="background-color: rgba(139, 111, 179, 0.14); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.25);">
+                                Authenticated Student
+                            </span>
+                            <span class="badge px-3 py-1 rounded-pill extra-small fw-semibold" style="background-color: rgba(121, 168, 138, 0.14); color: #79A88A; border: 1px solid rgba(121, 168, 138, 0.3);">
+                                🟢 Active
+                            </span>
+                        </div>
+
+                        <div class="pt-3 border-top text-start extra-small" style="border-color: #38323F !important;">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span style="color: #817986;">Academic Context:</span>
+                                <strong style="color: #F3F0F5;">III Year • Sec B</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span style="color: #817986;">Semester:</span>
+                                <strong style="color: #B99AD9;">V Semester</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span style="color: #817986;">Portal Role:</span>
+                                <strong style="color: #F3F0F5;">Student Workspace</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Personal, Academic, & Account Info Cards -->
+                <div class="col-12 col-lg-8">
+                    <!-- VIEW MODE CONTENT PANEL -->
+                    <div id="profile-view-container" class="d-flex flex-column gap-3">
+                        <!-- Card 1: Personal Information -->
+                        <div class="card-dash p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                            <div class="d-flex align-items-center justify-content-between mb-3 pb-3" style="border-bottom: 1px solid #38323F;">
+                                <h6 class="text-white fw-bold mb-0"><i class="bi bi-person me-2" style="color: #8B6FB3;"></i>Personal Information</h6>
+                                <span class="badge px-2.5 py-1 font-monospace extra-small" style="background-color: #19171F; color: #817986; border: 1px solid #38323F;">Editable</span>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">STUDENT NAME</div>
+                                        <div class="fw-bold student-name-display" id="profile-val-name" style="color: #F3F0F5;">--</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">COLLEGE EMAIL</div>
+                                        <div class="fw-bold student-email-display" id="profile-val-email" style="color: #F3F0F5;">--</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">PHONE NUMBER</div>
+                                        <div class="fw-bold" id="profile-val-phone" style="color: #F3F0F5;">+91 98765 43210</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Academic Information -->
+                        <div class="card-dash p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                            <div class="d-flex align-items-center justify-content-between mb-3 pb-3" style="border-bottom: 1px solid #38323F;">
+                                <h6 class="text-white fw-bold mb-0"><i class="bi bi-mortarboard me-2" style="color: #8B6FB3;"></i>Academic Information</h6>
+                                <span class="badge px-2.5 py-1 font-monospace extra-small" style="background-color: rgba(185, 154, 217, 0.1); color: #B99AD9; border: 1px solid rgba(185, 154, 217, 0.25);">Official Record</span>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1 d-flex align-items-center justify-content-between" style="color: #817986;">
+                                            <span>COLLEGE ID</span>
+                                            <i class="bi bi-lock-fill" style="font-size: 11px; color: #817986;" title="Read-Only Protected"></i>
+                                        </div>
+                                        <div class="fw-bold font-monospace student-id-display" id="profile-val-id" style="color: #B99AD9;">--</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">DEPARTMENT</div>
+                                        <div class="fw-bold student-dept-display" id="profile-val-dept" style="color: #F3F0F5;">Artificial Intelligence &amp; Data Science</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">YEAR</div>
+                                        <div class="fw-bold" id="profile-val-year" style="color: #F3F0F5;">III Year</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">SEMESTER</div>
+                                        <div class="fw-bold" id="profile-val-semester" style="color: #F3F0F5;">V Semester</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">SECTION</div>
+                                        <div class="fw-bold" id="profile-val-section" style="color: #F3F0F5;">B Section</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Account & Portal Information -->
+                        <div class="card-dash p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                            <div class="d-flex align-items-center justify-content-between mb-3 pb-3" style="border-bottom: 1px solid #38323F;">
+                                <h6 class="text-white fw-bold mb-0"><i class="bi bi-shield-check me-2" style="color: #8B6FB3;"></i>Account Information</h6>
+                                <span class="badge px-2.5 py-1 font-monospace extra-small" style="background-color: rgba(121, 168, 138, 0.14); color: #79A88A; border: 1px solid rgba(121, 168, 138, 0.3);">Active</span>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">REGISTERED SINCE</div>
+                                        <div class="fw-bold font-monospace student-created-display" id="profile-val-created" style="color: #B2AAB8;">2026-08-01</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                                        <div class="extra-small font-monospace text-uppercase mb-1" style="color: #817986;">ACCOUNT STATUS</div>
+                                        <div class="fw-bold" style="color: #79A88A;">Active (Verified Student)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EDIT MODE FORM CONTAINER (Initially Hidden) -->
+                    <form id="profile-edit-form" class="d-none" onsubmit="event.preventDefault(); saveStudentProfile();">
+                        <div class="card-dash p-4 mb-3" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                            <div class="d-flex align-items-center justify-content-between mb-3 pb-3" style="border-bottom: 1px solid #38323F;">
+                                <h6 class="text-white fw-bold mb-0"><i class="bi bi-pencil-square me-2" style="color: #8B6FB3;"></i>Edit Student Profile</h6>
+                                <span class="badge px-2.5 py-1 font-monospace extra-small" style="background-color: rgba(139, 111, 179, 0.15); color: #B99AD9;">Editing Mode</span>
+                            </div>
+
+                            <div class="row g-3">
+                                <!-- Personal Info Fields -->
+                                <div class="col-md-6">
+                                    <label for="edit-profile-name" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        Student Name <span class="text-rose">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="edit-profile-name" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit-profile-email" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        College Email <span class="text-rose">*</span>
+                                    </label>
+                                    <input type="email" class="form-control" id="edit-profile-email" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit-profile-phone" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        Phone Number
+                                    </label>
+                                    <input type="tel" class="form-control" id="edit-profile-phone" placeholder="+91 98765 43210" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit-profile-id" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        College ID <i class="bi bi-lock-fill ms-1" title="Protected Read-Only"></i>
+                                    </label>
+                                    <input type="text" class="form-control font-monospace" id="edit-profile-id" disabled readonly style="background-color: #19171F !important; opacity: 0.7; color: #B99AD9 !important;" />
+                                </div>
+
+                                <div class="col-12 my-2"><hr style="border-color: #38323F;" /></div>
+
+                                <!-- Academic Details -->
+                                <div class="col-md-6">
+                                    <label for="edit-profile-dept" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        Department
+                                    </label>
+                                    <input type="text" class="form-control" id="edit-profile-dept" value="Artificial Intelligence &amp; Data Science" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit-profile-year" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        Year
+                                    </label>
+                                    <input type="text" class="form-control" id="edit-profile-year" value="III Year" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit-profile-semester" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        Semester
+                                    </label>
+                                    <input type="text" class="form-control" id="edit-profile-semester" value="V Semester" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit-profile-section" class="form-label text-slate-300 extra-small font-monospace fw-bold uppercase">
+                                        Section
+                                    </label>
+                                    <input type="text" class="form-control" id="edit-profile-section" value="B Section" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Action Buttons -->
+                        <div class="d-flex align-items-center justify-content-end gap-2">
+                            <button type="button" class="btn btn-dark-card border-slate-700 text-slate-300 rounded-pill px-4 py-2 extra-small fw-semibold" onclick="toggleProfileEditMode(false)">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-cyan rounded-pill px-4 py-2 fw-bold extra-small" id="btn-save-profile">
+                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 10: NOTIFICATIONS (/student/notifications)
+             =================================================================== -->
+        <div class="student-view-panel d-none" id="view-notifications">
+            <!-- Page Header -->
+            <div class="mb-4">
+                <div class="text-uppercase extra-small font-monospace fw-bold mb-1" style="color: #8B6FB3 !important; letter-spacing: 0.1em; font-size: 0.72rem;">
+                    WORKSPACE ALERTS
+                </div>
+                <h3 class="text-white fw-bold mb-1" style="font-weight: 700; font-size: 1.65rem;">Notifications</h3>
+                <p class="small mb-0" style="color: #817986 !important; font-size: 0.88rem;">
+                    Laboratory alerts, booking confirmations, and maintenance updates.
+                </p>
+            </div>
+
+            <div class="card-dash p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="d-flex align-items-center justify-content-between mb-4 pb-3" style="border-bottom: 1px solid #38323F;">
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="text-white fw-bold mb-0" style="font-weight: 600; color: #F3F0F5;">All Notifications</h5>
+                        <span class="badge px-2.5 py-1 rounded-pill font-mono extra-small" id="page-unread-count-badge" style="background-color: rgba(139, 111, 179, 0.2); color: #B99AD9;">0 unread</span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-purple rounded-pill px-3 py-1.5 extra-small fw-semibold" onclick="markAllNotificationsAsRead()">
+                        <i class="bi bi-check2-all me-1"></i>Mark All as Read
+                    </button>
+                </div>
+
+                <div id="notifications-list-container" class="d-flex flex-column gap-2.5">
+                    <!-- Dynamically loaded notifications -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL 1: BOOKING MODAL -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-dark">
+                <div class="modal-header modal-header-dark">
+                    <h5 class="modal-header-title text-white fw-bold" id="bookingModalLabel"><i class="bi bi-calendar-check text-cyan me-2"></i>Book Equipment</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="booking-form">
+                    <div class="modal-body">
+                        <div id="booking-modal-alert" class="d-none"></div>
+                        <input type="hidden" id="booking-eq-id">
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-slate-300">Selected Equipment</label>
+                            <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 text-white fw-semibold" id="booking-eq-name">--</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="booking-batch" class="form-label text-slate-300">Batch / Class Name</label>
+                            <input type="text" class="form-control bg-slate-950 border-slate-800 text-white" id="booking-batch" value="B.Tech Practical Batch">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="booking-date" class="form-label text-slate-300">Session Date</label>
+                            <input type="date" class="form-control bg-slate-950 border-slate-800 text-white" id="booking-date" required>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label for="booking-start-time" class="form-label text-slate-300">Start Time</label>
+                                <input type="time" class="form-control bg-slate-950 border-slate-800 text-white" id="booking-start-time" value="10:00" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="booking-end-time" class="form-label text-slate-300">End Time</label>
+                                <input type="time" class="form-control bg-slate-950 border-slate-800 text-white" id="booking-end-time" value="12:00" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer modal-footer-dark">
+                        <button type="button" class="btn btn-dark-card border-slate-700 text-slate-300 rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-cyan rounded-pill px-4">Confirm Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: FAULT REPORT MODAL -->
+    <div class="modal fade" id="faultModal" tabindex="-1" aria-labelledby="faultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-dark">
+                <div class="modal-header modal-header-dark">
+                    <h5 class="modal-header-title text-white fw-bold" id="faultModalLabel"><i class="bi bi-tools text-rose me-2"></i>Report Equipment Fault</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="fault-form">
+                    <div class="modal-body">
+                        <div id="fault-modal-alert" class="d-none"></div>
+                        <input type="hidden" id="fault-eq-id">
+
+                        <div class="mb-3">
+                            <label class="form-label text-slate-300">Target Equipment</label>
+                            <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 text-white fw-semibold" id="fault-eq-name">--</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fault-type" class="form-label text-slate-300">Fault Category</label>
+                            <select class="form-select bg-slate-950 border-slate-800 text-white" id="fault-type">
+                                <option value="Display Issue">Display / Screen Artifacts</option>
+                                <option value="Power Failure">Power Supply Failure</option>
+                                <option value="Hardware Component Damage">Hardware Component Damage</option>
+                                <option value="Calibration Error">Calibration Error</option>
+                                <option value="Connectivity Issue">Cable / Bus Connectivity Issue</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fault-priority" class="form-label text-slate-300">Priority Level</label>
+                            <select class="form-select bg-slate-950 border-slate-800 text-white" id="fault-priority">
+                                <option value="Low">Low (Minor issue)</option>
+                                <option value="Medium" selected>Medium (Standard repair)</option>
+                                <option value="High">High (Class lab blocked)</option>
+                                <option value="Critical">Critical (Safety/Hardware hazard)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fault-desc" class="form-label text-slate-300">Problem Description</label>
+                            <textarea class="form-control bg-slate-950 border-slate-800 text-white" id="fault-desc" rows="3" placeholder="Describe the operational fault observed..." required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer modal-footer-dark">
+                        <button type="button" class="btn btn-dark-card border-slate-700 text-slate-300 rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-outline-danger text-rose border-rose rounded-pill px-4">Submit Fault Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: LOGOUT CONFIRMATION MODAL -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content modal-content-dark p-2">
+                <div class="modal-header modal-header-dark border-0 pb-1">
+                    <h6 class="modal-title text-white fw-bold d-flex align-items-center gap-2" id="logoutModalLabel">
+                        <i class="bi bi-box-arrow-right text-rose"></i> Confirm Logout
+                    </h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div id="logout-modal-alert" class="alert alert-danger extra-small mb-2 d-none"></div>
+                    <p class="text-slate-300 extra-small mb-0">Are you sure you want to log out of LabFlow Lite?</p>
+                </div>
+                <div class="modal-footer modal-footer-dark border-0 pt-2 gap-2">
+                    <button type="button" class="btn btn-sm btn-dark-card border-slate-700 text-slate-300 rounded-pill px-3 flex-grow-1" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger text-rose border-rose rounded-pill px-3 flex-grow-1" id="confirm-logout-btn" onclick="executeLogout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- MODAL: SESSION EQUIPMENT SELECTION MODAL -->
+    <div class="modal fade" id="sessionEquipmentModal" tabindex="-1" aria-labelledby="sessionEquipmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-content-dark" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="modal-header border-bottom border-slate-800 pb-3">
+                    <div>
+                        <div class="extra-small font-mono fw-bold" style="color: #8B6FB3; letter-spacing: 0.08em;">PRACTICAL SESSION ALLOCATION</div>
+                        <h5 class="modal-title text-white fw-bold mb-0" id="sessionEquipmentModalLabel">
+                            <i class="bi bi-hdd-network me-2" style="color: #B99AD9;"></i>Select Equipment for Practical Session
+                        </h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <!-- Session Context Summary Card -->
+                    <div class="p-3 rounded-3 mb-4" id="modal-session-context-card" style="background-color: #19171F; border: 1px solid #38323F;">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                            <h6 class="text-white fw-bold mb-0" id="m-session-subject">Deep Learning Practical</h6>
+                            <span class="badge font-mono extra-small" id="m-session-lab-code" style="background-color: rgba(139, 111, 179, 0.15); color: #B99AD9; border: 1px solid rgba(139, 111, 179, 0.3);">DL-LAB-01</span>
+                        </div>
+                        <div class="extra-small text-slate-300 mb-2" id="m-session-lab-name">Advanced Computing &amp; AI Research Lab</div>
+                        <div class="row g-2 extra-small pt-2 border-top border-slate-800">
+                            <div class="col-md-6" style="color: #B2AAB8;">
+                                <i class="bi bi-calendar3 me-1 text-purple-highlight"></i><span id="m-session-datetime">03 Sep 2026 • 09:00 AM — 11:00 AM</span>
+                            </div>
+                            <div class="col-md-6 text-md-end" style="color: #B2AAB8;">
+                                <i class="bi bi-person-badge me-1 text-purple-highlight"></i><span id="m-session-faculty">Dr. Murugesan</span>
+                            </div>
+                            <div class="col-12" style="color: #817986;">
+                                <i class="bi bi-mortarboard me-1"></i><span id="m-session-academic">III Year • V Semester • Section B • Batch 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="text-white fw-bold mb-3 d-flex align-items-center justify-content-between" style="font-size: 0.95rem;">
+                        <span>Laboratory Apparatus</span>
+                        <span class="extra-small font-normal text-slate-400">Select an available apparatus to reserve</span>
+                    </h6>
+
+                    <!-- Equipment List Container -->
+                    <div id="modal-session-equipment-list">
+                        <!-- Dynamically loaded equipment items -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BOOKING CONFIRMATION MODAL -->
+    <div class="modal fade" id="bookingConfirmModal" tabindex="-1" aria-labelledby="bookingConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-dark" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="modal-header border-bottom border-slate-800 pb-3">
+                    <div>
+                        <div class="extra-small font-mono fw-bold" style="color: #8B6FB3; letter-spacing: 0.08em;">RESERVATION CONFIRMATION</div>
+                        <h5 class="modal-title text-white fw-bold mb-0" id="bookingConfirmModalLabel">
+                            <i class="bi bi-check-circle me-2" style="color: #79A88A;"></i>Confirm Equipment Booking
+                        </h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="confirm-modal-alert" class="alert alert-danger extra-small mb-3 d-none"></div>
+
+                    <!-- Clean Structured Confirmation Details -->
+                    <div class="p-3 rounded-3 mb-3" style="background-color: #19171F; border: 1px solid #38323F;">
+                        <div class="mb-3">
+                            <div class="extra-small text-slate-400 font-mono text-uppercase">Equipment Apparatus</div>
+                            <div class="text-white fw-bold fs-6" id="confirm-eq-name">NVIDIA RTX 4090 GPU Workstation PC-1</div>
+                            <div class="extra-small font-mono text-purple-highlight" id="confirm-eq-code">LAB-AI-001</div>
+                        </div>
+
+                        <div class="mb-3 pb-2 border-bottom border-slate-800">
+                            <div class="extra-small text-slate-400 font-mono text-uppercase">Laboratory</div>
+                            <div class="text-slate-200 fw-medium" id="confirm-lab-name">Advanced Computing &amp; AI Research Lab</div>
+                            <div class="extra-small font-mono text-slate-400" id="confirm-lab-code">DL-LAB-01</div>
+                        </div>
+
+                        <div class="mb-3 pb-2 border-bottom border-slate-800">
+                            <div class="extra-small text-slate-400 font-mono text-uppercase">Practical Session</div>
+                            <div class="text-white fw-medium" id="confirm-practical-name">Deep Learning Practical</div>
+                            <div class="extra-small text-slate-300" id="confirm-academic-context">III Year • V Semester • Section B • Batch 1</div>
+                        </div>
+
+                        <div class="row g-2 extra-small">
+                            <div class="col-6">
+                                <div class="text-slate-400 font-mono text-uppercase">Date</div>
+                                <div class="text-white fw-semibold" id="confirm-date">03 Sep 2026</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-slate-400 font-mono text-uppercase">Time Slot</div>
+                                <div class="text-white fw-semibold" id="confirm-time">09:00 AM — 11:00 AM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="extra-small text-slate-400 mb-0">
+                        <i class="bi bi-info-circle me-1 text-purple"></i>Your booking will be logged for your coursework practical session and verified by the faculty in charge.
+                    </p>
+                </div>
+                <div class="modal-footer border-top border-slate-800 pt-3 gap-2">
+                    <button type="button" class="btn btn-dark-card border-slate-700 text-slate-300 rounded-pill px-3.5 extra-small fw-semibold" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-cyan rounded-pill px-4 extra-small fw-bold" id="btn-execute-booking" onclick="executeConfirmBooking()">
+                        <i class="bi bi-check-lg me-1"></i>Confirm Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BOOKING SUCCESS MODAL -->
+    <div class="modal fade" id="bookingSuccessModal" tabindex="-1" aria-labelledby="bookingSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-dark text-center p-4" style="background-color: #211E27; border: 1px solid #38323F; border-radius: 14px;">
+                <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background-color: rgba(121, 168, 138, 0.15); color: #79A88A; border: 1px solid rgba(121, 168, 138, 0.35); font-size: 1.75rem;">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <h4 class="text-white fw-bold mb-1">Equipment Booked Successfully</h4>
+                <p class="text-slate-300 extra-small mb-4" id="success-modal-msg">
+                    Your equipment reservation has been confirmed and assigned to your upcoming practical session.
+                </p>
+
+                <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2">
+                    <button type="button" class="btn btn-cyan rounded-pill px-4 py-2 extra-small fw-bold w-100 w-sm-auto" onclick="navigateToBookingsFromSuccess()">
+                        <i class="bi bi-hdd-network me-1"></i>View My Equipment
+                    </button>
+                    <button type="button" class="btn btn-outline-purple rounded-pill px-4 py-2 extra-small fw-semibold w-100 w-sm-auto" data-bs-dismiss="modal" onclick="navigateTo('/student/schedule')">
+                        Back to Lab Schedule
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST POPUP NOTIFICATION OVERLAY CONTAINER -->
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1080; pointer-events: none; max-width: 380px; width: 100%;"></div>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Dedicated Student Dashboard JS -->
+    <script src="/js/student.js"></script>
+</body>
+</html>

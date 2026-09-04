@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabFlow Lite — Smart Teaching Lab Management</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#main-navbar" data-bs-offset="90">
+
+    <!-- 1. NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark-main border-bottom-subtle" id="main-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#hero">
+                <img src="/assets/images/logo.png" alt="LabFlow Lite Logo" class="navbar-logo-img">
+                <span class="text-white fs-4 tracking-tight">LabFlow <span class="text-cyan">Lite</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link text-slate-300 active" href="#hero">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-slate-300" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link text-slate-300" href="#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link text-slate-300" href="#ai-insights">AI Insights</a></li>
+                    <li class="nav-item"><a class="nav-link text-slate-300" href="#impact">Impact</a></li>
+                    <li class="nav-item"><a class="nav-link text-slate-300" href="#about">About</a></li>
+                </ul>
+                <div class="ms-lg-3 mt-3 mt-lg-0">
+                    <a href="/login" class="btn btn-outline-cyan rounded-pill px-4 btn-sm fw-medium">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. REBALANCED TWO-COLUMN HERO -->
+    <section id="hero" class="hero-section py-4 py-lg-5 position-relative overflow-hidden d-flex align-items-center min-vh-lg-85">
+        <div class="bg-grid-pattern position-absolute top-0 start-0 w-100 h-100 opacity-15 pointer-events-none"></div>
+        <div class="container position-relative z-1 py-3 py-lg-4">
+            <div class="row align-items-center gy-5 gy-lg-0">
+                <!-- LEFT 55% HERO CONTENT -->
+                <div class="col-lg-6 col-xl-6">
+                    <div class="eyebrow-text text-cyan font-monospace uppercase tracking-wider extra-small fw-semibold mb-2">
+                        LAB OPERATIONS PLATFORM
+                    </div>
+                    <h1 class="hero-headline fw-extrabold text-white lh-sm mb-3">
+                        Manage Every Lab Asset.<br>
+                        <span class="text-gradient-cyan">From Booking to Maintenance.</span>
+                    </h1>
+                    <p class="hero-subtext text-slate-400 mb-4 pe-lg-4 fs-6 fw-normal">
+                        LabFlow Lite helps engineering colleges manage teaching-lab equipment, practical-session bookings, faults, maintenance, and utilization from one connected platform.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#features" class="btn btn-cyan rounded-pill px-4 py-2.5 fw-semibold">
+                            Explore LabFlow <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                        <a href="#how-it-works" class="btn btn-dark-card border-slate-700 text-slate-200 rounded-pill px-4 py-2.5 fw-semibold">
+                            See How It Works
+                        </a>
+                    </div>
+                </div>
+
+                <!-- RIGHT 45% HERO VISUAL: LARGE LOGO WITH FLOATING CONNECTED EQUIPMENT -->
+                <div class="col-lg-6 col-xl-6 text-center d-flex align-items-center justify-content-center">
+                    <div class="hero-logo-wrapper text-center position-relative w-100 py-4">
+                        
+                        <!-- Subtle Connection Network Lines -->
+                        <svg class="hero-connection-lines position-absolute top-50 start-50 translate-middle w-100 h-100" viewBox="0 0 520 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- Line 1: Top-Left GPU Workstation to Center -->
+                            <path d="M 85 85 Q 170 145 260 200" stroke="rgba(185, 154, 217, 0.22)" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <!-- Line 2: Top-Right Compute Server to Center -->
+                            <path d="M 435 85 Q 350 145 260 200" stroke="rgba(185, 154, 217, 0.22)" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <!-- Line 3: Bottom-Left Digital Oscilloscope to Center -->
+                            <path d="M 95 315 Q 175 255 260 200" stroke="rgba(185, 154, 217, 0.22)" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <!-- Line 4: Bottom-Right 3D Prototyper to Center -->
+                            <path d="M 425 315 Q 345 255 260 200" stroke="rgba(185, 154, 217, 0.22)" stroke-width="1.5" stroke-dasharray="4 4" />
+                        </svg>
+
+                        <!-- Floating Equipment 1: GPU Workstation (Top-Left) -->
+                        <div class="floating-equipment-node node-gpu position-absolute">
+                            <div class="floating-equipment-card d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill">
+                                <span class="node-icon-dot d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-gpu-card"></i>
+                                </span>
+                                <span class="node-label fw-semibold extra-small text-slate-200">GPU Workstation</span>
+                                <span class="status-indicator-dot"></span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Equipment 2: Compute Server (Top-Right) -->
+                        <div class="floating-equipment-node node-server position-absolute">
+                            <div class="floating-equipment-card d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill">
+                                <span class="node-icon-dot d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-hdd-rack"></i>
+                                </span>
+                                <span class="node-label fw-semibold extra-small text-slate-200">Compute Server</span>
+                                <span class="status-indicator-dot"></span>
+                            </div>
+                        </div>
+
+                        <!-- Central Main Focus: LabFlow Lite Logo -->
+                        <img src="/assets/images/logo.png" alt="LabFlow Lite" class="hero-logo-img img-fluid position-relative z-1">
+
+                        <!-- Floating Equipment 3: Digital Oscilloscope (Bottom-Left) -->
+                        <div class="floating-equipment-node node-oscilloscope position-absolute">
+                            <div class="floating-equipment-card d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill">
+                                <span class="node-icon-dot d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-activity"></i>
+                                </span>
+                                <span class="node-label fw-semibold extra-small text-slate-200">Oscilloscope</span>
+                                <span class="status-indicator-dot"></span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Equipment 4: 3D Prototyper (Bottom-Right) -->
+                        <div class="floating-equipment-node node-printer position-absolute">
+                            <div class="floating-equipment-card d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill">
+                                <span class="node-icon-dot d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-printer"></i>
+                                </span>
+                                <span class="node-label fw-semibold extra-small text-slate-200">3D Prototyper</span>
+                                <span class="status-indicator-dot"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PROBLEM SECTION (Editorial Compact List) -->
+    <section id="problem" class="py-5 bg-dark-secondary border-top border-bottom border-slate-800">
+        <div class="container py-4">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-5">
+                    <span class="text-cyan font-monospace uppercase tracking-wider extra-small fw-semibold">Operational Bottlenecks</span>
+                    <h2 class="display-6 text-white fw-bold mt-2 mb-3">Teaching Labs Shouldn't Depend on Spreadsheets.</h2>
+                    <p class="text-slate-400 fs-6 mb-4">
+                        Managing equipment across practical sessions becomes difficult when availability, bookings, faults, and maintenance are tracked separately.
+                    </p>
+                    <div class="p-3 bg-slate-900 rounded-3 border border-slate-800">
+                        <div class="d-flex align-items-center gap-2 text-cyan fw-semibold small mb-1">
+                            <i class="bi bi-link-45deg fs-5"></i> The Connected Approach
+                        </div>
+                        <p class="text-slate-400 extra-small mb-0">
+                            LabFlow Lite bridges availability and maintenance into one shared log for faculty and lab staff.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Clean Editorial / Compact Row List Layout -->
+                <div class="col-lg-7">
+                    <div class="problem-editorial-list d-flex flex-column gap-3">
+                        <div class="problem-row p-3 rounded-3 bg-slate-900 border-slate-800 d-flex flex-column gap-2 cursor-pointer" id="problem-conflicts-row" onclick="toggleProblemConflictsPreview()">
+                            <div class="d-flex align-items-center gap-3 w-100">
+                                <div class="indicator-dot bg-rose-subtle text-rose rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                    <i class="bi bi-calendar-x"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h6 class="text-white fw-bold mb-0.5">Equipment Conflicts</h6>
+                                        <span class="badge bg-rose-subtle text-rose extra-small fw-normal">Preview</span>
+                                    </div>
+                                    <p class="text-slate-400 extra-small mb-0">Overlapping lab sessions and double-booked trainer kits stall practical classes.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Compact In-Place Preview Panel -->
+                            <div id="conflicts-compact-preview" class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 d-none mt-1">
+                                <div class="d-flex align-items-center justify-content-between mb-1.5 pb-1 border-bottom border-slate-900">
+                                    <span class="text-rose font-monospace extra-small fw-bold"><i class="bi bi-exclamation-octagon-fill me-1"></i> EQUIPMENT CONFLICTS</span>
+                                    <span class="text-slate-400 extra-small">Equipment requiring attention</span>
+                                </div>
+                                <div class="d-flex flex-column gap-1.5 font-monospace extra-small">
+                                    <div class="d-flex align-items-center justify-content-between text-slate-300">
+                                        <span class="fw-semibold text-white">PC-LAB-041</span>
+                                        <span class="text-slate-400">AI Lab</span>
+                                        <span class="badge bg-blue-subtle text-cyan rounded-pill px-2 py-0.5">Booked</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between text-slate-300">
+                                        <span class="fw-semibold text-white">OSC-012</span>
+                                        <span class="text-slate-400">Electronics</span>
+                                        <span class="badge bg-rose-subtle text-rose rounded-pill px-2 py-0.5">Faulty</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="problem-row p-3 rounded-3 bg-slate-900 border-slate-800 d-flex align-items-center gap-3">
+                            <div class="indicator-dot bg-rose-subtle text-rose rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="bi bi-journal-x"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-white fw-bold mb-0.5">Manual Availability Tracking</h6>
+                                <p class="text-slate-400 extra-small mb-0">Physical paper registers lead to missing entries, untracked locations, and audit delays.</p>
+                            </div>
+                        </div>
+
+                        <div class="problem-row p-3 rounded-3 bg-slate-900 border-slate-800 d-flex align-items-center gap-3">
+                            <div class="indicator-dot bg-rose-subtle text-rose rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-white fw-bold mb-0.5">Fault Reporting Gaps</h6>
+                                <p class="text-slate-400 extra-small mb-0">Damaged devices sit unflagged on lab benches without technician repair alerts.</p>
+                            </div>
+                        </div>
+
+                        <div class="problem-row p-3 rounded-3 bg-slate-900 border-slate-800 d-flex align-items-center gap-3">
+                            <div class="indicator-dot bg-rose-subtle text-rose rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                <i class="bi bi-eye-slash"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-white fw-bold mb-0.5">Poor Utilization Visibility</h6>
+                                <p class="text-slate-400 extra-small mb-0">Department heads lack clear data on which expensive instruments are underused or overworked.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FEATURES SECTION (Intentional Asymmetric Grid Layout) -->
+    <section id="features" class="py-5 py-lg-6 bg-dark-main">
+        <div class="container py-4">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span class="text-cyan font-monospace uppercase tracking-wider small fw-semibold">Platform Capabilities</span>
+                <h2 class="display-6 text-white fw-bold mt-2">Everything Your Teaching Lab Needs</h2>
+                <p class="text-slate-400">Engineered specifically for engineering college laboratories and practical coursework.</p>
+            </div>
+
+            <!-- Structured Intentional Feature Layout Grid -->
+            <div class="feature-grid">
+                <!-- PRIMARY FEATURE (Equipment Management) -->
+                <div class="card-base feature-primary border-cyan-highlight p-4 p-md-5">
+                    <div class="d-flex flex-column h-100 justify-content-between gap-4">
+                        <div>
+                            <div class="badge bg-cyan-subtle text-cyan border border-cyan-subtle rounded-pill px-3 py-1.5 mb-3 extra-small fw-semibold">
+                                PRIMARY FEATURE
+                            </div>
+                            <h3 class="text-white fw-bold mb-3">Equipment Management</h3>
+                            <p class="text-slate-300 fs-6 mb-4">
+                                Maintain a centralized view of equipment, location, status, and availability across all college practical laboratories.
+                            </p>
+                            <ul class="list-unstyled d-flex flex-column gap-2 text-slate-400 small mb-0">
+                                <li class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-check2-circle text-cyan fs-5"></i> Real-time status tags: Available, Booked, Faulty, Maintenance
+                                </li>
+                                <li class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-check2-circle text-cyan fs-5"></i> Lab-wise filtering for Microprocessor, AI/ML, and Telecom labs
+                                </li>
+                                <li class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-check2-circle text-cyan fs-5"></i> Unique apparatus codes &amp; specification metadata
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Interface Snippet Visual -->
+                        <div class="bg-slate-950 p-3 rounded-3 border border-slate-800 mt-auto">
+                            <div class="d-flex align-items-center justify-content-between pb-2 mb-2 border-bottom border-slate-900 text-slate-400 extra-small">
+                                <span>EQUIPMENT INVENTORY</span>
+                                <span>TOTAL: 128 UNITS</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-dark table-borderless table-sm extra-small align-middle mb-0">
+                                    <thead>
+                                        <tr class="text-slate-500 border-bottom border-slate-900">
+                                            <th>CODE</th>
+                                            <th>NAME</th>
+                                            <th>LAB</th>
+                                            <th>STATUS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-300 font-monospace">
+                                        <tr>
+                                            <td>DSO-101</td>
+                                            <td>Tektronix 100MHz</td>
+                                            <td>ECE-Lab 2</td>
+                                            <td><span class="badge bg-emerald-subtle text-emerald rounded-pill">Available</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>MCU-204</td>
+                                            <td>ARM Cortex Board</td>
+                                            <td>Embed-Lab</td>
+                                            <td><span class="badge bg-blue-subtle text-cyan rounded-pill">Booked</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>GPU-003</td>
+                                            <td>RTX 4090 PC</td>
+                                            <td>AI-Research</td>
+                                            <td><span class="badge bg-emerald-subtle text-emerald rounded-pill">Available</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SIG-012</td>
+                                            <td>Function Gen 25MHz</td>
+                                            <td>Telecom-Lab</td>
+                                            <td><span class="badge bg-rose-subtle text-rose rounded-pill">Faulty</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUPPORTING FEATURE 1: Smart Booking -->
+                <div class="card-base feature-booking h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-calendar-week fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Batch-Wise Smart Booking</h6>
+                    <p class="text-slate-400 small mb-0">Schedule equipment slots tailored to practical batch timetables, preventing double-bookings and conflicts.</p>
+                </div>
+
+                <!-- SUPPORTING FEATURE 2: QR/RFID -->
+                <div class="card-base feature-qr h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-qr-code-scan fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">QR / RFID Identification</h6>
+                    <p class="text-slate-400 small mb-0">Instant lookup and check-in by scanning unique equipment tags via mobile or desktop cameras.</p>
+                </div>
+
+                <!-- SUPPORTING ROW OF 3 CARDS -->
+                <div class="card-base feature-fault h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-tools fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Fault Reporting</h6>
+                    <p class="text-slate-400 small mb-0">Log hardware defects instantly with priority levels and detailed descriptions for prompt action.</p>
+                </div>
+
+                <div class="card-base feature-maint h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-wrench-adjustable fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Maintenance Tracking</h6>
+                    <p class="text-slate-400 small mb-0">Assign repair work orders to lab assistants and track maintenance cycles to completion.</p>
+                </div>
+
+                <div class="card-base feature-util h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-bar-chart-line fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Utilization Analytics</h6>
+                    <p class="text-slate-400 small mb-0">Quantitative operational insights into apparatus usage frequency and lab hours.</p>
+                </div>
+
+                <!-- FULL WIDTH FEATURE: AI Demand Forecasting -->
+                <div class="card-base feature-ai-full border-cyan-highlight p-4">
+                    <div class="row align-items-center gy-3">
+                        <div class="col-lg-8">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="icon-box bg-cyan text-white rounded-3 d-inline-flex p-2">
+                                    <i class="bi bi-cpu-fill fs-5"></i>
+                                </div>
+                                <h5 class="text-white fw-bold mb-0">AI Demand Forecasting</h5>
+                            </div>
+                            <p class="text-slate-400 small mb-0">Analyze timetable trends and usage history to anticipate peak equipment demand before practical lab sessions begin.</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <span class="badge bg-cyan-subtle text-cyan border border-cyan-subtle px-3 py-2 rounded-pill extra-small">Smart Intelligence</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. HOW IT WORKS / EQUIPMENT LIFECYCLE -->
+    <section id="how-it-works" class="py-5 py-lg-6 bg-dark-secondary border-top border-bottom border-slate-800">
+        <div class="container py-4">
+            <!-- Section Header -->
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span class="text-purple font-monospace uppercase tracking-wider small fw-semibold">EQUIPMENT LIFECYCLE</span>
+                <h2 class="display-6 text-white fw-bold mt-2">How LabFlow Lite Operates</h2>
+                <p class="text-slate-300 fs-6">An end-to-end connected workflow for academic laboratory operations.</p>
+            </div>
+
+            <!-- ALTERNATING / ZIG-ZAG PROCESS TIMELINE -->
+            <div class="lifecycle-timeline-container">
+                <!-- STEP 01: PLAN (LEFT) -->
+                <div class="lifecycle-step-row step-left">
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">01</div>
+                            <h5 class="lifecycle-step-title">PLAN</h5>
+                            <p class="lifecycle-step-desc">Syllabus scheduling.</p>
+                        </div>
+                    </div>
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                </div>
+
+                <!-- STEP 02: BOOK (RIGHT) -->
+                <div class="lifecycle-step-row step-right">
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">02</div>
+                            <h5 class="lifecycle-step-title">BOOK</h5>
+                            <p class="lifecycle-step-desc">Batch reservations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 03: SCAN (LEFT) -->
+                <div class="lifecycle-step-row step-left">
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">03</div>
+                            <h5 class="lifecycle-step-title">SCAN</h5>
+                            <p class="lifecycle-step-desc">Bench QR check-in.</p>
+                        </div>
+                    </div>
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                </div>
+
+                <!-- STEP 04: CHECK (RIGHT) -->
+                <div class="lifecycle-step-row step-right">
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">04</div>
+                            <h5 class="lifecycle-step-title">CHECK</h5>
+                            <p class="lifecycle-step-desc">Operational verification.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 05: REPORT (LEFT) -->
+                <div class="lifecycle-step-row step-left">
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">05</div>
+                            <h5 class="lifecycle-step-title">REPORT</h5>
+                            <p class="lifecycle-step-desc">Fault ticketing.</p>
+                        </div>
+                    </div>
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                </div>
+
+                <!-- STEP 06: MAINTAIN (RIGHT) -->
+                <div class="lifecycle-step-row step-right">
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">06</div>
+                            <h5 class="lifecycle-step-title">MAINTAIN</h5>
+                            <p class="lifecycle-step-desc">Repair tracking.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 07: ANALYZE (LEFT) -->
+                <div class="lifecycle-step-row step-left">
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card">
+                            <div class="lifecycle-step-num">07</div>
+                            <h5 class="lifecycle-step-title">ANALYZE</h5>
+                            <p class="lifecycle-step-desc">Usage metrics.</p>
+                        </div>
+                    </div>
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                </div>
+
+                <!-- STEP 08: PREDICT (RIGHT - ENHANCED) -->
+                <div class="lifecycle-step-row step-right">
+                    <div class="lifecycle-timeline-marker">
+                        <span class="marker-dot"></span>
+                    </div>
+                    <div class="lifecycle-step-card-wrapper">
+                        <div class="lifecycle-step-card card-predict">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <div class="lifecycle-step-num text-purple-light">08</div>
+                                <span class="predict-badge"><i class="bi bi-graph-up-arrow me-1"></i> Demand Forecast</span>
+                            </div>
+                            <h5 class="lifecycle-step-title text-purple-light">PREDICT</h5>
+                            <p class="lifecycle-step-desc">Historical usage analysis to forecast upcoming semester demand.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEPARATE ASSET LIFECYCLE TRACKING PANEL -->
+            <div class="asset-lifecycle-panel max-w-960 mx-auto">
+                <div class="asset-lifecycle-header">
+                    <div>
+                        <div class="text-purple font-monospace uppercase tracking-wider extra-small fw-semibold mb-1">
+                            ASSET LIFECYCLE TRACKING
+                        </div>
+                        <h4 class="text-white fw-bold mb-0">OSC-012 <span class="text-slate-400 fs-6 fw-normal ms-2">Digital Storage Oscilloscope (100 MHz)</span></h4>
+                    </div>
+                    <div>
+                        <span class="asset-id-tag"><i class="bi bi-qr-code me-1.5"></i> Bench QR: QR_OSC012</span>
+                    </div>
+                </div>
+
+                <div class="asset-journey-grid">
+                    <!-- Milestone 1: Booked -->
+                    <div class="journey-milestone milestone-booked">
+                        <div class="milestone-status">
+                            <span class="milestone-indicator"></span> Booked
+                        </div>
+                        <p class="milestone-desc">ECE-3A Session</p>
+                    </div>
+
+                    <!-- Milestone 2: Fault Reported -->
+                    <div class="journey-milestone milestone-fault">
+                        <div class="milestone-status">
+                            <span class="milestone-indicator"></span> Fault Reported
+                        </div>
+                        <p class="milestone-desc">Service ticket opened</p>
+                    </div>
+
+                    <!-- Milestone 3: In Repair -->
+                    <div class="journey-milestone milestone-repair">
+                        <div class="milestone-status">
+                            <span class="milestone-indicator"></span> In Repair
+                        </div>
+                        <p class="milestone-desc">Maintenance team</p>
+                    </div>
+
+                    <!-- Milestone 4: Restored -->
+                    <div class="journey-milestone milestone-restored">
+                        <div class="milestone-status">
+                            <span class="milestone-indicator"></span> Restored
+                        </div>
+                        <p class="milestone-desc">Ready for use</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. EQUIPMENT INTELLIGENCE SECTION -->
+    <section id="ai-insights" class="py-5 py-lg-6 bg-dark-main">
+        <div class="container py-4">
+            <!-- Section Header -->
+            <div class="max-w-700 mb-4 mb-lg-5">
+                <span class="text-cyan font-monospace uppercase tracking-wider extra-small fw-semibold">RESOURCE PLANNING</span>
+                <h2 class="display-6 text-white fw-bold mt-1 mb-2">Equipment Intelligence</h2>
+                <p class="text-slate-400 fs-6 mb-0">
+                    Use booking, usage, and maintenance history to identify demand patterns and support better resource planning.
+                </p>
+            </div>
+
+            <!-- Two-Column Balanced Composition -->
+            <div class="row align-items-stretch gy-4">
+                <!-- LEFT SIDE — DATA SOURCES PANEL -->
+                <div class="col-lg-6 d-flex">
+                    <div class="card-base w-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="border-bottom border-slate-800 pb-3 mb-4">
+                                <div class="text-cyan font-monospace uppercase extra-small fw-semibold tracking-wider">
+                                    <i class="bi bi-diagram-3 me-2"></i>DATA SOURCES
+                                </div>
+                            </div>
+
+                            <!-- 3 Horizontally Arranged Data Sources -->
+                            <div class="row g-2 mb-4">
+                                <div class="col-4">
+                                    <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 h-100">
+                                        <div class="text-cyan font-monospace fw-bold extra-small mb-1">01</div>
+                                        <div class="text-white fw-semibold extra-small lh-sm mb-1">Upcoming Sessions</div>
+                                        <div class="text-slate-400 extra-small lh-xs" style="font-size: 0.72rem;">Planned practicals &amp; bookings</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 h-100">
+                                        <div class="text-cyan font-monospace fw-bold extra-small mb-1">02</div>
+                                        <div class="text-white fw-semibold extra-small lh-sm mb-1">Historical Usage</div>
+                                        <div class="text-slate-400 extra-small lh-xs" style="font-size: 0.72rem;">Utilization &amp; lab trends</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 h-100">
+                                        <div class="text-cyan font-monospace fw-bold extra-small mb-1">03</div>
+                                        <div class="text-white fw-semibold extra-small lh-sm mb-1">Equipment History</div>
+                                        <div class="text-slate-400 extra-small lh-xs" style="font-size: 0.72rem;">Faults &amp; service logs</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Flow Steps -->
+                        <div class="d-flex flex-column gap-2 mt-auto pt-2 border-top border-slate-800">
+                            <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 text-center">
+                                <span class="fw-semibold text-cyan font-monospace extra-small">DEMAND FORECAST</span>
+                            </div>
+                            <div class="text-center text-cyan py-0.5"><i class="bi bi-arrow-down fs-6"></i></div>
+                            <div class="p-2.5 rounded-3 bg-slate-950 border border-cyan-subtle text-center">
+                                <span class="fw-semibold text-white extra-small">Recommended Action</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE — PREDICTIVE ENGINE PANEL -->
+                <div class="col-lg-6 d-flex">
+                    <div class="card-base w-100 p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between border-bottom border-slate-800 pb-3 mb-4">
+                                <div class="text-cyan font-monospace uppercase extra-small fw-semibold tracking-wider">
+                                    <i class="bi bi-cpu-fill me-2"></i>PREDICTIVE ENGINE
+                                </div>
+                                <span class="badge bg-cyan-subtle text-cyan border border-cyan-subtle extra-small">SAMPLE PREDICTIVE INSIGHT</span>
+                            </div>
+
+                            <!-- Alert Container -->
+                            <div class="p-3.5 rounded-3 bg-slate-950 border border-slate-800 mb-4">
+                                <div class="d-flex align-items-center gap-2 text-cyan fw-semibold small mb-2">
+                                    <i class="bi bi-exclamation-circle-fill"></i> Equipment Demand Alert
+                                </div>
+                                <p class="text-slate-200 small mb-3">
+                                    "Equipment demand is expected to increase next week for <strong>Digital Storage Oscilloscopes (100MHz)</strong> based on upcoming ECE practical sessions."
+                                </p>
+                                <div class="p-2.5 rounded bg-slate-900 text-slate-300 extra-small border-start border-3 border-cyan">
+                                    <div class="text-cyan fw-bold extra-small mb-0.5">Recommended Action</div>
+                                    <div>"Review equipment availability before scheduling additional sessions."</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Small Operational Summary Row -->
+                        <div class="p-2.5 rounded-3 bg-slate-950 border border-slate-800 mt-auto">
+                            <div class="row g-2 text-center align-items-center extra-small">
+                                <div class="col-4 border-end border-slate-800">
+                                    <div class="text-slate-500 font-monospace uppercase" style="font-size: 0.7rem;">DEMAND</div>
+                                    <div class="text-amber fw-bold mt-0.5">High next week</div>
+                                </div>
+                                <div class="col-4 border-end border-slate-800">
+                                    <div class="text-slate-500 font-monospace uppercase" style="font-size: 0.7rem;">EQUIPMENT</div>
+                                    <div class="text-white fw-bold mt-0.5">Oscilloscopes</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-slate-500 font-monospace uppercase" style="font-size: 0.7rem;">CONTEXT</div>
+                                    <div class="text-cyan fw-bold mt-0.5">ECE Practicals</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. IMPACT SECTION -->
+    <section id="impact" class="py-5 bg-dark-secondary border-top border-bottom border-slate-800">
+        <div class="container py-4">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span class="text-cyan font-monospace uppercase tracking-wider small fw-semibold">Operational Value</span>
+                <h2 class="display-6 text-white fw-bold mt-2">Measurable Institutional Impact</h2>
+                <p class="text-slate-400">Core operational advantages realized by engineering colleges implementing LabFlow Lite.</p>
+            </div>
+            
+            <div class="impact-grid">
+                <div class="card-base impact-card h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-shield-check fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Reduce Booking Conflicts</h6>
+                    <p class="text-slate-400 small mb-0">Better visibility before practical sessions prevents schedule overlaps between departments.</p>
+                </div>
+
+                <div class="card-base impact-card h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-lightning-charge fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Speed Up Fault Reporting</h6>
+                    <p class="text-slate-400 small mb-0">Identify the exact equipment and issue quickly, alerting lab technicians without delay.</p>
+                </div>
+
+                <div class="card-base impact-card h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-graph-up-arrow fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Improve Utilization</h6>
+                    <p class="text-slate-400 small mb-0">Understand which equipment is frequently used or underutilized across academic semesters.</p>
+                </div>
+
+                <div class="card-base impact-card h-100">
+                    <div class="icon-box text-cyan bg-cyan-subtle mb-3">
+                        <i class="bi bi-people fs-5"></i>
+                    </div>
+                    <h6 class="text-white fw-bold mb-2">Reduce Manual Coordination</h6>
+                    <p class="text-slate-400 small mb-0">Bring booking, faults, and maintenance into one unified workflow for faculty and staff.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. ABOUT LABFLOW LITE -->
+    <section id="about" class="py-5 py-lg-6 bg-dark-main">
+        <div class="container py-4">
+            <div class="card-base p-4 p-md-5">
+                <div class="row align-items-center gy-4">
+                    <div class="col-lg-8">
+                        <span class="text-cyan font-monospace uppercase tracking-wider small fw-semibold">About LabFlow Lite</span>
+                        <h3 class="text-white fw-bold mt-2 mb-3">Tailored for Indian Engineering College Laboratories</h3>
+                        <p class="text-slate-300 mb-3">
+                            LabFlow Lite focuses specifically on teaching-laboratory equipment workflows in Indian engineering colleges and polytechnic institutes. Practical coursework in ECE, Computer Science, and Electrical engineering relies on shared trainer boards, oscilloscopes, and computing hardware.
+                        </p>
+                        <div class="p-3 bg-slate-950 rounded-3 border border-slate-800 text-slate-300 font-monospace extra-small">
+                            Practical Sessions &rarr; Equipment &rarr; Booking &rarr; Faults &rarr; Maintenance &rarr; Analytics
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <div class="p-3.5 rounded-3 bg-slate-950 border border-slate-800 text-start">
+                            <div class="text-cyan fw-bold small mb-1"><i class="bi bi-mortarboard me-2"></i>Academic Focus</div>
+                            <div class="text-white small mb-1">Teaching Laboratories</div>
+                            <div class="text-slate-400 extra-small">Microprocessor, AI/ML, Embedded Systems &amp; Circuit Labs.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FINAL CTA -->
+    <section class="py-5 bg-dark-secondary border-top border-slate-800">
+        <div class="container py-4">
+            <div class="cta-box p-4 p-md-5 rounded-4 bg-gradient-cta border border-cyan-subtle text-center">
+                <div class="max-w-700 mx-auto">
+                    <h2 class="display-6 text-white fw-bold mb-3">Bring Your Lab Operations Into One Workflow.</h2>
+                    <p class="text-slate-300 mb-4 fs-5">
+                        Manage equipment, bookings, faults, maintenance, and insights from one place.
+                    </p>
+                    <a href="#features" class="btn btn-cyan rounded-pill px-5 py-3 fw-bold fs-6">
+                        Explore LabFlow
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer class="footer bg-dark-main border-top border-slate-800 text-slate-400 py-5">
+        <div class="container">
+            <div class="row g-4 mb-5">
+                <div class="col-lg-5">
+                    <a class="d-flex align-items-center gap-2 fw-bold text-decoration-none mb-3" href="#hero">
+                        <div class="brand-icon bg-cyan-glow text-white rounded-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-cpu-fill fs-5"></i>
+                        </div>
+                        <span class="text-white fs-4 tracking-tight">LabFlow <span class="text-cyan">Lite</span></span>
+                    </a>
+                    <p class="text-slate-400 small pe-lg-5">
+                        An AI-powered teaching laboratory equipment management system tailored for Indian engineering colleges. Simplifying inventory, bookings, fault reporting, and analytics.
+                    </p>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h6 class="text-white fw-bold mb-3">Navigation</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2 small">
+                        <li><a href="#hero" class="text-slate-400 text-decoration-none hover-text-cyan">Home</a></li>
+                        <li><a href="#features" class="text-slate-400 text-decoration-none hover-text-cyan">Features</a></li>
+                        <li><a href="#how-it-works" class="text-slate-400 text-decoration-none hover-text-cyan">How It Works</a></li>
+                        <li><a href="#ai-insights" class="text-slate-400 text-decoration-none hover-text-cyan">AI Insights</a></li>
+                        <li><a href="#impact" class="text-slate-400 text-decoration-none hover-text-cyan">Impact</a></li>
+                        <li><a href="#about" class="text-slate-400 text-decoration-none hover-text-cyan">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <h6 class="text-white fw-bold mb-3">Project Credits</h6>
+                    <div class="p-3 bg-slate-900 rounded-3 border border-slate-800">
+                        <div class="text-cyan font-monospace fw-bold mb-1"><i class="bi bi-trophy me-2"></i>NexHack 2.0</div>
+                        <div class="text-white fw-semibold small">Developed by Team CODECRAFTERS</div>
+                        <div class="text-slate-400 extra-small mt-1">Teaching Laboratory Operations System</div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top border-slate-800 pt-4 d-flex flex-column flex-sm-row align-items-center justify-content-between small text-slate-500">
+                <div>&copy; 2026 LabFlow Lite. Built for Engineering College Labs.</div>
+                <div class="mt-2 mt-sm-0">Team CODECRAFTERS — NexHack 2.0</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+</body>
+</html>
